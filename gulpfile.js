@@ -1,7 +1,7 @@
 'use strict';
 require('dotenv').config();
 
-const { src, dest, watch } = require('gulp');
+const { src, dest, watch, parallel } = require('gulp');
 const gulpif = require('gulp-if');
 const sourcemaps = require('gulp-sourcemaps');
 const _PROD = process.env.MODE === 'production' ? true : false;
@@ -15,6 +15,7 @@ const pug = require('gulp-pug-3');
 
 const outputLocation = './dist';
 const sassLocation = './src/css/main.scss';
+const pugLocation = './src/index.pug';
 
 function compileSass(done) {
     src(sassLocation)
@@ -36,7 +37,7 @@ function watchSass() {
 }
 
 function compilePug(done) {
-    src('./src/index.pug')
+    src(pugLocation)
         .pipe(pugLinter({ failAfterError: true, reporter: 'default' }))
         .pipe(
             pug({
@@ -47,6 +48,9 @@ function compilePug(done) {
     done();
 }
 
-exports.compileSass = compileSass;
-exports.watchSass = watchSass;
-exports.compilePug = compilePug;
+function watchPug() {
+    watch(pugLocation, compilePug);
+}
+
+exports.build = parallel(compilePug, compileSass);
+exports.watch = parallel(watchPug, watchSass);
