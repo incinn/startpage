@@ -23,9 +23,8 @@
     "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-terser": "^2.0.1",
-    "gulp-typescript": "^6.0.0-alpha.1"
-  },
-  "dependencies": {
+    "gulp-typescript": "^6.0.0-alpha.1",
     "gulp-autoprefixer": "^7.0.1"
-  }
+  },
+  "dependencies": {}
 }
