@@ -3,9 +3,9 @@ interface Test {
     name: string;
 }
 
-function test(): void {
+function foo(): void {
     let item: Test = { id: 1, name: 'testing' };
     console.log(item);
 }
 
-test();
+foo();

@@ -1,9 +1,9 @@
-'use strict';
 require('dotenv').config();
 
-const { src, dest, watch, parallel } = require('gulp');
+const { src, dest, watch, parallel, series } = require('gulp');
 const gulpif = require('gulp-if');
 const sourcemaps = require('gulp-sourcemaps');
+const del = require('del');
 const _PROD = process.env.MODE === 'production' ? true : false;
 
 const sass = require('gulp-sass');
@@ -21,8 +21,12 @@ const sassLocation = './src/css/**/*.scss';
 const pugLocation = './src/index.pug';
 const tsLocation = './src/js/**/*.ts';
 
-function compileSass(done) {
-    src(sassLocation)
+function cleanup() {
+    return del([outputLocation + '/**/*']);
+}
+
+function compileSass() {
+    return src(sassLocation)
         .pipe(gulpif(!_PROD, sourcemaps.init()))
         .pipe(sass().on('error', sass.logError))
         .pipe(
@@ -33,15 +37,14 @@ function compileSass(done) {
         .pipe(cleanCSS())
         .pipe(gulpif(!_PROD, sourcemaps.write('.')))
         .pipe(dest(outputLocation));
-    done();
 }
 
 function watchSass() {
     watch(sassLocation, compileSass);
 }
 
-function compilePug(done) {
-    src(pugLocation)
+function compilePug() {
+    return src(pugLocation)
         .pipe(pugLinter({ failAfterError: true, reporter: 'default' }))
         .pipe(
             pug({
@@ -49,15 +52,14 @@ function compilePug(done) {
             })
         )
         .pipe(dest(outputLocation));
-    done();
 }
 
 function watchPug() {
     watch(pugLocation, compilePug);
 }
 
-function compileTypescript(done) {
-    src(tsLocation)
+function compileTypescript() {
+    return src(tsLocation)
         .pipe(gulpif(!_PROD, sourcemaps.init()))
         .pipe(ts({ noImplicitAny: true, outFile: 'bundle.js' }))
         .pipe(
@@ -68,8 +70,12 @@ function compileTypescript(done) {
         )
         .pipe(gulpif(!_PROD, sourcemaps.write('.')))
         .pipe(dest(outputLocation));
-    done();
 }
 
-exports.build = parallel(compilePug, compileSass, compileTypescript);
-exports.watch = parallel(watchPug, watchSass);
+function watchTypescript() {
+    watch(tsLocation, compileTypescript);
+}
+
+exports.build = series(cleanup, compilePug, compileSass, compileTypescript);
+exports.watch = parallel(watchPug, watchSass, watchTypescript);
+exports.clean = cleanup;
