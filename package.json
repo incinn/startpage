@@ -25,6 +25,8 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-terser": "^2.0.1",
     "gulp-typescript": "^6.0.0-alpha.1",
-    "reset-css": "^5.0.1"
+    "reset-css": "^5.0.1",
+    "ts-loader": "8.2.0",
+    "webpack-stream": "^6.1.2"
   }
 }

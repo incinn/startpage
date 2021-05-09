@@ -17,7 +17,7 @@ const cleanCSS = require('gulp-clean-css');
 const pugLinter = require('gulp-pug-linter');
 const pug = require('gulp-pug-3');
 
-const ts = require('gulp-typescript');
+const webpack = require('webpack-stream');
 const terser = require('gulp-terser');
 
 const outputLocation = './dist';
@@ -56,15 +56,33 @@ function compilePug() {
 
 function compileTypescript() {
     return src(tsLocation)
-        .pipe(gulpif(!_PROD, sourcemaps.init()))
-        .pipe(ts({ noImplicitAny: true, outFile: 'bundle.js' }))
+        .pipe(
+            webpack({
+                mode: _PROD ? 'production' : 'development',
+                entry: './src/js/index.ts',
+                module: {
+                    rules: [
+                        {
+                            test: /\.tsx?$/,
+                            use: 'ts-loader',
+                            exclude: /node_modules/,
+                        },
+                    ],
+                },
+                resolve: {
+                    extensions: ['.tsx', '.ts', '.js'],
+                },
+                output: {
+                    filename: 'bundle.js',
+                },
+            })
+        )
         .pipe(
             terser({
                 mangle: true,
                 compress: true,
             })
         )
-        .pipe(gulpif(!_PROD, sourcemaps.write('.')))
         .pipe(dest(outputLocation));
 }
 
