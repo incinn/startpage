@@ -1,9 +1,13 @@
 require('dotenv').config();
 
 const { src, dest, watch, parallel, series } = require('gulp');
+const { readFileSync } = require('fs');
 const gulpif = require('gulp-if');
 const sourcemaps = require('gulp-sourcemaps');
 const del = require('del');
+const rev = require('gulp-rev');
+const revRewrite = require('gulp-rev-rewrite');
+const revdel = require('gulp-rev-delete-original');
 const _PROD = process.env.MODE === 'production' ? true : false;
 
 const sass = require('gulp-sass');
@@ -17,9 +21,9 @@ const ts = require('gulp-typescript');
 const terser = require('gulp-terser');
 
 const outputLocation = './dist';
-const sassLocation = './src/css/**/*.scss';
+const sassLocation = './src/css/main.scss';
 const pugLocation = './src/index.pug';
-const tsLocation = './src/js/**/*.ts';
+const tsLocation = './src/js/index.ts';
 
 function cleanup() {
     return del([outputLocation + '/**/*']);
@@ -64,12 +68,37 @@ function compileTypescript() {
         .pipe(dest(outputLocation));
 }
 
+function revision() {
+    return src(outputLocation + '/**/*.{css,js}')
+        .pipe(rev())
+        .pipe(dest(outputLocation))
+        .pipe(revdel())
+        .pipe(rev.manifest())
+        .pipe(dest(outputLocation));
+}
+
+function rewrite() {
+    const manifest = readFileSync(outputLocation + '/rev-manifest.json');
+    return src(outputLocation + '/**/*.html')
+        .pipe(revRewrite({ manifest }))
+        .pipe(dest(outputLocation));
+}
+
 function watchSource() {
     watch(sassLocation, compileSass);
     watch(pugLocation, compilePug);
     watch(tsLocation, compileTypescript);
 }
 
-exports.build = series(cleanup, compilePug, compileSass, compileTypescript);
-exports.watch = series(cleanup, watchSource);
+exports.build = series(
+    cleanup,
+    parallel(compilePug, compileSass, compileTypescript),
+    revision,
+    rewrite
+);
+exports.watch = series(
+    cleanup,
+    parallel(compilePug, compileSass, compileTypescript),
+    watchSource
+);
 exports.clean = cleanup;
