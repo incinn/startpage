@@ -13,9 +13,13 @@ const cleanCSS = require('gulp-clean-css');
 const pugLinter = require('gulp-pug-linter');
 const pug = require('gulp-pug-3');
 
+const ts = require('gulp-typescript');
+const terser = require('gulp-terser');
+
 const outputLocation = './dist';
-const sassLocation = './src/css/main.scss';
+const sassLocation = './src/css/**/*.scss';
 const pugLocation = './src/index.pug';
+const tsLocation = './src/js/**/*.ts';
 
 function compileSass(done) {
     src(sassLocation)
@@ -52,5 +56,20 @@ function watchPug() {
     watch(pugLocation, compilePug);
 }
 
-exports.build = parallel(compilePug, compileSass);
+function compileTypescript(done) {
+    src(tsLocation)
+        .pipe(gulpif(!_PROD, sourcemaps.init()))
+        .pipe(ts({ noImplicitAny: true, outFile: 'bundle.js' }))
+        .pipe(
+            terser({
+                mangle: true,
+                compress: true,
+            })
+        )
+        .pipe(gulpif(!_PROD, sourcemaps.write('.')))
+        .pipe(dest(outputLocation));
+    done();
+}
+
+exports.build = parallel(compilePug, compileSass, compileTypescript);
 exports.watch = parallel(watchPug, watchSass);
