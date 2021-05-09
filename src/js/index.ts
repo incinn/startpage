@@ -1,3 +1,5 @@
+import { Greeting } from './greeting.enum';
+
 function setTime(): void {
     const container = document.getElementById('timeContainer');
 
@@ -21,10 +23,10 @@ function welcomeMessage(): void {
     const now = new Date();
 
     if (now.getHours() >= 0 && now.getHours() <= 11)
-        container.innerHTML = 'Morning';
+        container.innerHTML = Greeting.morning;
     else if (now.getHours() >= 12 && now.getHours() <= 17)
-        container.innerHTML = 'Afternoon';
-    else if (now.getHours() >= 18) container.innerHTML = 'Evening';
+        container.innerHTML = Greeting.afternoon;
+    else if (now.getHours() >= 18) container.innerHTML = Greeting.evening;
 }
 
 welcomeMessage();
