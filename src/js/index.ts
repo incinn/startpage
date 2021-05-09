@@ -18,6 +18,54 @@ function setTime(): void {
     }, 1000);
 }
 
+function displayDate(): void {
+    const container = document.getElementById('dateDisplay');
+    const now = new Date();
+    const months = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ];
+    const days = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+    ];
+
+    function formatDate(number): string {
+        var d = number % 10;
+        return ~~((number % 100) / 10) === 1
+            ? number + 'th'
+            : d === 1
+            ? number + 'st'
+            : d === 2
+            ? number + 'nd'
+            : d === 3
+            ? number + 'rd'
+            : number + 'th';
+    }
+
+    container.innerHTML =
+        days[now.getDay()] +
+        ' ' +
+        formatDate(now.getDate()) +
+        ' ' +
+        months[now.getMonth()];
+}
+
 function welcomeMessage(): void {
     const container = document.getElementById('welcomeContainer');
     const now = new Date();
@@ -31,3 +79,4 @@ function welcomeMessage(): void {
 
 welcomeMessage();
 setTime();
+displayDate();

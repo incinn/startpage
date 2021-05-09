@@ -37,11 +37,18 @@ body {
         align-items: center;
         justify-content: space-between;
         font-size: 2rem;
-        margin-bottom: 3rem;
+        margin-bottom: 0.5rem;
 
         span {
             font-weight: bold;
         }
+    }
+
+    &__date {
+        opacity: 0.5;
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1.5rem;
     }
 
     &__search {
