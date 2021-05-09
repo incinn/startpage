@@ -39,10 +39,6 @@ function compileSass() {
         .pipe(dest(outputLocation));
 }
 
-function watchSass() {
-    watch(sassLocation, compileSass);
-}
-
 function compilePug() {
     return src(pugLocation)
         .pipe(pugLinter({ failAfterError: true, reporter: 'default' }))
@@ -52,10 +48,6 @@ function compilePug() {
             })
         )
         .pipe(dest(outputLocation));
-}
-
-function watchPug() {
-    watch(pugLocation, compilePug);
 }
 
 function compileTypescript() {
@@ -72,10 +64,12 @@ function compileTypescript() {
         .pipe(dest(outputLocation));
 }
 
-function watchTypescript() {
+function watchSource() {
+    watch(sassLocation, compileSass);
+    watch(pugLocation, compilePug);
     watch(tsLocation, compileTypescript);
 }
 
 exports.build = series(cleanup, compilePug, compileSass, compileTypescript);
-exports.watch = parallel(watchPug, watchSass, watchTypescript);
+exports.watch = series(cleanup, watchSource);
 exports.clean = cleanup;
