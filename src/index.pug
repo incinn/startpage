@@ -7,6 +7,12 @@ html(lang="en")
     link(rel='stylesheet' href='main.css')
     title Start
   body 
-    h1 Hello 
-      span world
+    .wrapper
+      .wrapper__inner
+        .wrapper__welcome
+          h1 Good&nbsp;
+            span#welcomeContainer Day
+          .wrapper__welcome__time#timeContainer 00:00:00
+        .wrapper__search
+          input(type='search', autofocus)
   script(src='bundle.js')

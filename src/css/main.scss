@@ -1,11 +1,63 @@
-h1 {
-    color: red;
+@import '../../node_modules/reset-css/sass/reset';
 
-    span {
-        color: green;
+:root {
+    --background: #2d2d34;
+    --dark: #2d2d34;
+    --light: #f1e4e8;
+    --gray: #e2dcde;
+    --danger: #b97375;
+}
+
+body {
+    font-family: monospace;
+    font-size: 16px;
+    background-color: var(--background);
+    color: var(--light);
+
+    * {
+        box-sizing: border-box;
     }
 }
 
-.autoprefixer-test {
-    user-select: none;
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    padding: 1rem;
+
+    &__inner {
+        width: 80vw;
+        max-width: 1000px;
+    }
+
+    &__welcome {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 2rem;
+        margin-bottom: 3rem;
+
+        span {
+            font-weight: bold;
+        }
+    }
+
+    &__search {
+        input {
+            width: 100%;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            background-color: transparent;
+            border: 1px solid var(--light);
+            color: var(--light);
+            border-radius: 6px;
+
+            &:focus {
+                box-shadow: 1px 1px 1px 1px var(--white);
+                outline: none;
+            }
+        }
+    }
 }

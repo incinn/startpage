@@ -13,6 +13,7 @@
     "del": "^6.0.0",
     "dotenv": "^9.0.0",
     "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
     "gulp-clean-css": "^4.3.0",
     "gulp-if": "^3.0.0",
     "gulp-pug-3": "^1.2.2",
@@ -24,7 +25,6 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-terser": "^2.0.1",
     "gulp-typescript": "^6.0.0-alpha.1",
-    "gulp-autoprefixer": "^7.0.1"
-  },
-  "dependencies": {}
+    "reset-css": "^5.0.1"
+  }
 }
