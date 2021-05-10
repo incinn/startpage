@@ -23,7 +23,7 @@ const terser = require('gulp-terser');
 const outputLocation = './dist';
 const sassLocation = './src/css/main.scss';
 const pugLocation = './src/index.pug';
-const tsLocation = './src/js/index.ts';
+const tsLocation = './src/js/entry.ts';
 
 function cleanup() {
     return del([outputLocation + '/**/*']);
@@ -59,7 +59,7 @@ function compileTypescript() {
         .pipe(
             webpack({
                 mode: _PROD ? 'production' : 'development',
-                entry: './src/js/index.ts',
+                entry: tsLocation,
                 module: {
                     rules: [
                         {
