@@ -2,6 +2,7 @@ import { Greeting } from './greeting.enum';
 
 export class DisplayGreeting {
     private container: HTMLElement;
+    private timer: any;
 
     constructor() {
         this.container = document.getElementById('welcomeContainer');
@@ -13,6 +14,15 @@ export class DisplayGreeting {
     }
 
     public init(): void {
+        this.setWelcome();
+        this.timer = setInterval(() => this.setWelcome(), 3600000);
+    }
+
+    public destroy(): void {
+        clearInterval(this.timer);
+    }
+
+    private setWelcome(): void {
         const now = new Date();
         if (now.getHours() >= 0 && now.getHours() <= 11)
             this.container.innerHTML = Greeting.morning;
