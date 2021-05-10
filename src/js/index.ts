@@ -77,6 +77,10 @@ function welcomeMessage(): void {
     else if (now.getHours() >= 18) container.innerHTML = Greeting.evening;
 }
 
-welcomeMessage();
-setTime();
-displayDate();
+function init(): void {
+    welcomeMessage();
+    setTime();
+    displayDate();
+}
+
+window.onload = init;
