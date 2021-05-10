@@ -24,6 +24,7 @@ const outputLocation = './dist';
 const sassLocation = './src/css/main.scss';
 const pugLocation = './src/index.pug';
 const tsLocation = './src/js/entry.ts';
+const imageLocation = './src/img/**/*';
 
 function cleanup() {
     return del([outputLocation + '/**/*']);
@@ -86,8 +87,12 @@ function compileTypescript() {
         .pipe(dest(outputLocation));
 }
 
+function copyImages() {
+    return src(imageLocation).pipe(dest(outputLocation));
+}
+
 function revision() {
-    return src(outputLocation + '/**/*.{css,js}')
+    return src(outputLocation + '/**/*.{css,js,jpg,jpeg,png}')
         .pipe(rev())
         .pipe(dest(outputLocation))
         .pipe(revdel())
@@ -97,7 +102,7 @@ function revision() {
 
 function rewrite() {
     const manifest = readFileSync(outputLocation + '/rev-manifest.json');
-    return src(outputLocation + '/**/*.html')
+    return src([outputLocation + '/**/*.html', outputLocation + '/**/*.css'])
         .pipe(revRewrite({ manifest }))
         .pipe(dest(outputLocation));
 }
@@ -110,13 +115,13 @@ function watchSource() {
 
 exports.build = series(
     cleanup,
-    parallel(compilePug, compileSass, compileTypescript),
+    parallel(compilePug, compileSass, compileTypescript, copyImages),
     revision,
     rewrite
 );
 exports.watch = series(
     cleanup,
-    parallel(compilePug, compileSass, compileTypescript),
+    parallel(compilePug, compileSass, compileTypescript, copyImages),
     watchSource
 );
 exports.clean = cleanup;
