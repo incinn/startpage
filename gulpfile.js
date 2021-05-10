@@ -88,7 +88,7 @@ function compileTypescript() {
 }
 
 function copyImages() {
-    return src(imageLocation).pipe(dest(outputLocation));
+    return src(imageLocation).pipe(dest(outputLocation + '/img/'));
 }
 
 function revision() {
