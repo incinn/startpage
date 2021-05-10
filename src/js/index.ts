@@ -1,22 +1,5 @@
+import { DisplayTime } from './components/time/time';
 import { Greeting } from './greeting.enum';
-
-function setTime(): void {
-    const container = document.getElementById('timeContainer');
-
-    function pad(n: number): string | number {
-        return n < 10 ? '0' + n : n;
-    }
-
-    setInterval(() => {
-        const now = new Date();
-        container.innerHTML =
-            pad(now.getHours()) +
-            ':' +
-            pad(now.getMinutes()) +
-            ':' +
-            pad(now.getSeconds());
-    }, 1000);
-}
 
 function displayDate(): void {
     const container = document.getElementById('dateDisplay');
@@ -77,10 +60,10 @@ function welcomeMessage(): void {
     else if (now.getHours() >= 18) container.innerHTML = Greeting.evening;
 }
 
-function init(): void {
-    welcomeMessage();
-    setTime();
-    displayDate();
-}
+window.onload = () => {
+    const time = new DisplayTime();
 
-window.onload = init;
+    time.init();
+    welcomeMessage();
+    displayDate();
+};
