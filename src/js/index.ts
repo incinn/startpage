@@ -1,3 +1,4 @@
+import { DisplayDate } from './components/date/date';
 import { DisplayTime } from './components/time/time';
 import { Greeting } from './greeting.enum';
 
@@ -62,8 +63,9 @@ function welcomeMessage(): void {
 
 window.onload = () => {
     const time = new DisplayTime();
+    const date = new DisplayDate();
 
     time.init();
-    welcomeMessage();
+    date.init();
     displayDate();
 };
