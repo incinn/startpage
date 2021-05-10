@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const { src, dest, watch, parallel, series } = require('gulp');
 const { readFileSync } = require('fs');
+const Dotenv = require('dotenv-webpack');
 const gulpif = require('gulp-if');
 const sourcemaps = require('gulp-sourcemaps');
 const del = require('del');
@@ -23,7 +24,8 @@ const terser = require('gulp-terser');
 const outputLocation = './dist';
 const sassLocation = './src/css/main.scss';
 const pugLocation = './src/index.pug';
-const tsLocation = './src/js/entry.ts';
+const tsEntryLocation = './src/js/entry.ts';
+const tsLocation = './src/js/**/*';
 const imageLocation = './src/img/**/*';
 
 function cleanup() {
@@ -60,7 +62,7 @@ function compileTypescript() {
         .pipe(
             webpack({
                 mode: _PROD ? 'production' : 'development',
-                entry: tsLocation,
+                entry: tsEntryLocation,
                 module: {
                     rules: [
                         {
@@ -70,6 +72,11 @@ function compileTypescript() {
                         },
                     ],
                 },
+                plugins: [
+                    new Dotenv({
+                        path: './.env',
+                    }),
+                ],
                 resolve: {
                     extensions: ['.tsx', '.ts', '.js'],
                 },

@@ -12,6 +12,7 @@
   "devDependencies": {
     "del": "^6.0.0",
     "dotenv": "^9.0.0",
+    "dotenv-webpack": "^7.0.2",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-clean-css": "^4.3.0",
@@ -28,5 +29,8 @@
     "reset-css": "^5.0.1",
     "ts-loader": "8.2.0",
     "webpack-stream": "^6.1.2"
+  },
+  "dependencies": {
+    "@types/dotenv-webpack": "^7.0.2"
   }
 }
