@@ -3,7 +3,7 @@ export class Weather {
     private icon: any;
     private weatherApi =
         'https://api.openweathermap.org/data/2.5/weather?units=metric';
-    private iconUrl = 'http://openweathermap.org/img/wn';
+    private iconUrl = 'http://openweathermap.org/img/wn/';
     private apiKey = process.env.OPENWEATHERMAP_API_KEY;
     private weatherCity = process.env.OPENWEATHERMAP_CITY;
     private weatherCountry = process.env.OPENWEATHERMAP_COUNTRY;
@@ -14,8 +14,8 @@ export class Weather {
     }
 
     public init(): void {
-        const Http = new XMLHttpRequest();
-        Http.open(
+        const request = new XMLHttpRequest();
+        request.open(
             'GET',
             this.weatherApi +
                 '&q=' +
@@ -25,14 +25,12 @@ export class Weather {
                 '&appid=' +
                 this.apiKey
         );
-        Http.send();
+        request.send();
 
-        Http.onreadystatechange = (e) => {
-            if (Http.readyState === 4) {
-                if (Http.status === 200) {
-                    var obj = JSON.parse(Http.responseText);
-                    console.log('responseText: ', Http.responseText);
-                    this.render(JSON.stringify(obj));
+        request.onreadystatechange = (e) => {
+            if (request.readyState === 4) {
+                if (request.status === 200) {
+                    this.render(request.responseText);
                 }
             }
         };
@@ -41,10 +39,12 @@ export class Weather {
     private render(response: string): void {
         const resp = JSON.parse(response);
         if (resp) {
-            console.log(resp);
             this.container.innerHTML =
-                resp.weather[0].description + ' ' + resp.main.temp + '&deg;C';
-            this.icon.src = this.iconUrl + '/' + resp.weather[0].icon + '.png';
+                resp.weather[0].description +
+                ' &bull; ' +
+                resp.main.temp +
+                '&deg;C';
+            this.icon.src = this.iconUrl + resp.weather[0].icon + '.png';
         }
     }
 }
