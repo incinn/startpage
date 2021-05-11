@@ -1,4 +1,7 @@
-export class Weather {
+import { SitePlugin } from '../site/plugin';
+
+export class Weather extends SitePlugin {
+    public _name = 'Display weather';
     private container: HTMLElement;
     private icon: any;
     private weatherApi =
@@ -9,6 +12,7 @@ export class Weather {
     private weatherCountry = process.env.OPENWEATHERMAP_COUNTRY;
 
     constructor() {
+        super();
         this.container = document.getElementById('weatherDisplay');
         this.icon = document.getElementById('weatherIcon');
     }
