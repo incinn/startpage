@@ -1,5 +1,11 @@
 import { SitePlugin } from '../site/plugin';
 
+export interface WeatherDisplayLite {
+    description: string;
+    temperature: number;
+    iconCode: string;
+}
+
 export class Weather extends SitePlugin {
     public _name = 'Display weather';
     private container: HTMLElement;
@@ -18,6 +24,15 @@ export class Weather extends SitePlugin {
     }
 
     public init(): void {
+        this.getLatest();
+    }
+
+    public refresh(): void {
+        console.info(`refreshing ${this._name}`);
+        this.init();
+    }
+
+    private getLatest(): void {
         const request = new XMLHttpRequest();
         request.open(
             'GET',
@@ -34,26 +49,23 @@ export class Weather extends SitePlugin {
         request.onreadystatechange = (e) => {
             if (request.readyState === 4) {
                 if (request.status === 200) {
-                    this.render(request.responseText);
+                    const resp = JSON.parse(request.responseText);
+                    const weather: WeatherDisplayLite = {
+                        description: resp.weather[0].description,
+                        temperature: resp.main.temp as number,
+                        iconCode: resp.weather[0].icon,
+                    };
+
+                    this.render(weather);
                 }
             }
         };
     }
 
-    public refresh(): void {
-        console.info(`refreshing ${this._name}`);
-        this.init();
-    }
-
-    private render(response: string): void {
-        const resp = JSON.parse(response);
-        if (resp) {
-            this.container.innerHTML =
-                resp.weather[0].description +
-                ' &bull; ' +
-                resp.main.temp +
-                '&deg;C';
-            this.icon.src = this.iconUrl + resp.weather[0].icon + '.png';
+    private render(weather: WeatherDisplayLite): void {
+        if (weather) {
+            this.container.innerHTML = `${weather.description} &bull; ${weather.temperature}&deg;C`;
+            this.icon.src = this.iconUrl + weather.iconCode + '.png';
         }
     }
 }
