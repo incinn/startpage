@@ -8,4 +8,6 @@ export class SitePlugin {
     }
 
     public refresh(): void {}
+
+    public destroy(): void {}
 }

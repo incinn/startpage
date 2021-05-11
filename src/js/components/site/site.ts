@@ -31,3 +31,12 @@ export class Site {
             plugin.refresh();
         });
     }
+
+    public destroy(): void {
+        this.plugins.forEach((plugin) => {
+            plugin.destroy();
+        });
+
+        clearInterval(this.refreshTimer);
+    }
+}
