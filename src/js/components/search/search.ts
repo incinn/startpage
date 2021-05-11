@@ -28,6 +28,10 @@ export class Search extends SitePlugin {
         if (event.key === 'Enter') {
             this.submitSearch();
         }
+
+        if (event.key === 'Escape') {
+            this.searchInput.value = '';
+        }
     }
 
     private submitSearch(): void {
