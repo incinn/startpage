@@ -5,25 +5,19 @@ import { DisplayGreeting } from './../greeting/greeting';
 import { DisplayTime } from './../time/time';
 
 export class Site {
-    private time: DisplayTime;
-    private date: DisplayDate;
-    private greeting: DisplayGreeting;
-    private search: Search;
-    private weather: Weather;
+    private plugins = [
+        new DisplayTime(),
+        new DisplayDate(),
+        new DisplayGreeting(),
+        new Search(),
+        new Weather(),
+    ];
 
-    constructor() {
-        this.time = new DisplayTime();
-        this.date = new DisplayDate();
-        this.greeting = new DisplayGreeting();
-        this.search = new Search();
-        this.weather = new Weather();
-    }
+    constructor() {}
 
     public init(): void {
-        this.time.init();
-        this.date.init();
-        this.greeting.init();
-        this.search.init();
-        this.weather.init();
+        this.plugins.forEach((plugin) => {
+            plugin.init();
+        });
     }
 }
