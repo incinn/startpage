@@ -1,4 +1,7 @@
-export class DisplayDate {
+import { SitePlugin } from '../site/plugin';
+
+export class DisplayDate extends SitePlugin {
+    public _name = 'Display Date';
     private container: HTMLElement;
     private months = [
         'January',
@@ -25,8 +28,8 @@ export class DisplayDate {
     ];
 
     constructor() {
+        super();
         this.container = document.getElementById('dateDisplay');
-
         if (!this.container) {
             console.error('Unable to find dateDisplay');
             this.init = () => {};
@@ -34,8 +37,10 @@ export class DisplayDate {
     }
 
     public init(): void {
-        const now = new Date();
+        this.renderDate(new Date());
+    }
 
+    private renderDate(now: Date) {
         this.container.innerHTML =
             this.days[now.getDay()] +
             ' ' +

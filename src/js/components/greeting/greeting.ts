@@ -1,10 +1,13 @@
+import { SitePlugin } from '../site/plugin';
 import { Greeting } from './greeting.enum';
 
-export class DisplayGreeting {
+export class DisplayGreeting extends SitePlugin {
+    public _name = 'Display Greeting';
     private container: HTMLElement;
     private timer: any;
 
     constructor() {
+        super();
         this.container = document.getElementById('welcomeContainer');
 
         if (!this.container) {

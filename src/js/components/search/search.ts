@@ -1,7 +1,11 @@
-export class Search {
+import { SitePlugin } from '../site/plugin';
+
+export class Search extends SitePlugin {
+    public _name = 'Search';
     private searchInput: any;
 
     constructor() {
+        super();
         this.searchInput = document.getElementById('searchInput');
     }
 

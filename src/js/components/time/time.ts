@@ -1,8 +1,12 @@
-export class DisplayTime {
+import { SitePlugin } from '../site/plugin';
+
+export class DisplayTime extends SitePlugin {
+    public _name = 'Display Time';
     private container: HTMLElement;
     private timer: any;
 
     constructor() {
+        super();
         this.container = document.getElementById('timeContainer');
 
         if (!this.container) {
