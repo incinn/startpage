@@ -8,12 +8,14 @@ export enum SearchMode {
 export class Search extends SitePlugin {
     public _name = 'Search';
     private searchInput: any;
+    private searchWrapper: any;
     private mode: SearchMode;
 
     constructor() {
         super();
         this.mode = SearchMode.assign;
         this.searchInput = document.getElementById('searchInput');
+        this.searchWrapper = document.getElementById('searchWrapper');
     }
 
     public init(): void {
@@ -21,6 +23,7 @@ export class Search extends SitePlugin {
 
         this.searchInput.addEventListener('keyup', (event: KeyboardEvent) => {
             this.handleKeyPress(event);
+            this.toggleHelp();
         });
     }
 
@@ -31,6 +34,14 @@ export class Search extends SitePlugin {
 
         if (event.key === 'Escape') {
             this.searchInput.value = '';
+        }
+    }
+
+    private toggleHelp(): void {
+        if (this.searchInput.value[0] === '!') {
+            this.searchWrapper.classList.add('showHelp');
+        } else {
+            this.searchWrapper.classList.remove('showHelp');
         }
     }
 
