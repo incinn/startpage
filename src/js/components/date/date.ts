@@ -40,6 +40,11 @@ export class DisplayDate extends SitePlugin {
         this.renderDate(new Date());
     }
 
+    public refresh(): void {
+        console.info(`refreshing ${this._name}`);
+        this.init();
+    }
+
     private renderDate(now: Date) {
         this.container.innerHTML =
             this.days[now.getDay()] +

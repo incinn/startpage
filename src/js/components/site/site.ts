@@ -5,6 +5,8 @@ import { DisplayGreeting } from './../greeting/greeting';
 import { DisplayTime } from './../time/time';
 
 export class Site {
+    private refreshTimer: any;
+
     private plugins = [
         new DisplayTime(),
         new DisplayDate(),
@@ -19,5 +21,13 @@ export class Site {
         this.plugins.forEach((plugin) => {
             plugin.init();
         });
+
+        // 30min refresh timer
+        this.refreshTimer = setInterval(() => this.refresh(), 1800000);
     }
-}
+
+    public refresh(): void {
+        this.plugins.forEach((plugin) => {
+            plugin.refresh();
+        });
+    }

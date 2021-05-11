@@ -4,7 +4,6 @@ import { Greeting } from './greeting.enum';
 export class DisplayGreeting extends SitePlugin {
     public _name = 'Display Greeting';
     private container: HTMLElement;
-    private timer: any;
 
     constructor() {
         super();
@@ -18,11 +17,11 @@ export class DisplayGreeting extends SitePlugin {
 
     public init(): void {
         this.setWelcome();
-        this.timer = setInterval(() => this.setWelcome(), 3600000);
     }
 
-    public destroy(): void {
-        clearInterval(this.timer);
+    public refresh(): void {
+        console.info(`refreshing ${this._name}`);
+        this.init();
     }
 
     private setWelcome(): void {

@@ -40,6 +40,11 @@ export class Weather extends SitePlugin {
         };
     }
 
+    public refresh(): void {
+        console.info(`refreshing ${this._name}`);
+        this.init();
+    }
+
     private render(response: string): void {
         const resp = JSON.parse(response);
         if (resp) {

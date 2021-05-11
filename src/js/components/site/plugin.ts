@@ -6,4 +6,6 @@ export class SitePlugin {
     public init(): void {
         throw new Error(`${this._name} not yet implemented`);
     }
+
+    public refresh(): void {}
 }
