@@ -6,7 +6,7 @@ export class Weather extends SitePlugin {
     private icon: any;
     private weatherApi =
         'https://api.openweathermap.org/data/2.5/weather?units=metric';
-    private iconUrl = 'http://openweathermap.org/img/wn/';
+    private iconUrl = 'https://openweathermap.org/img/wn/';
     private apiKey = process.env.OPENWEATHERMAP_API_KEY;
     private weatherCity = process.env.OPENWEATHERMAP_CITY;
     private weatherCountry = process.env.OPENWEATHERMAP_COUNTRY;
