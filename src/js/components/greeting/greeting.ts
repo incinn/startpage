@@ -3,6 +3,7 @@ import { Greeting } from './greeting.enum';
 
 export class DisplayGreeting extends SitePlugin {
     public _name = 'Display Greeting';
+    public _refresh = true;
     private container: HTMLElement;
 
     constructor() {
@@ -19,8 +20,7 @@ export class DisplayGreeting extends SitePlugin {
         this.setWelcome();
     }
 
-    public refresh(): void {
-        console.info(`refreshing ${this._name}`);
+    public onRefresh(): void {
         this.init();
     }
 

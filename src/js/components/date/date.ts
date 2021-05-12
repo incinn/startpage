@@ -2,6 +2,7 @@ import { SitePlugin } from '../site/plugin';
 
 export class DisplayDate extends SitePlugin {
     public _name = 'Display Date';
+    public _refresh = true;
     private container: HTMLElement;
     private months = [
         'January',
@@ -40,8 +41,7 @@ export class DisplayDate extends SitePlugin {
         this.renderDate(new Date());
     }
 
-    public refresh(): void {
-        console.info(`refreshing ${this._name}`);
+    public onRefresh(): void {
         this.init();
     }
 

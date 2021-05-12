@@ -8,6 +8,7 @@ export interface WeatherDisplayLite {
 
 export class Weather extends SitePlugin {
     public _name = 'Display weather';
+    public _refresh = true;
     private container: HTMLElement;
     private icon: any;
     private weatherApi =
@@ -27,8 +28,7 @@ export class Weather extends SitePlugin {
         this.getLatest();
     }
 
-    public refresh(): void {
-        console.info(`refreshing ${this._name}`);
+    public onRefresh(): void {
         this.init();
     }
 
