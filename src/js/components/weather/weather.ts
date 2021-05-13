@@ -25,7 +25,11 @@ export class Weather extends SitePlugin {
     }
 
     public init(): void {
-        this.getLatest();
+        const data = this.getStorage();
+        const timeSinceSave =
+            new Date().valueOf() - new Date(data.lastChange).valueOf();
+
+        timeSinceSave >= 1800000 ? this.getLatest() : this.render(data);
     }
 
     public onRefresh(): void {
@@ -57,6 +61,7 @@ export class Weather extends SitePlugin {
                     };
 
                     this.render(weather);
+                    this.setStorage(weather);
                 }
             }
         };
