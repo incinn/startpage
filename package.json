@@ -31,6 +31,8 @@
     "webpack-stream": "^6.1.2"
   },
   "dependencies": {
-    "@types/dotenv-webpack": "^7.0.2"
+    "@types/dotenv-webpack": "^7.0.2",
+    "gulp-cli": "^2.3.0",
+    "typescript": "^4.2.4"
   }
 }
