@@ -29,7 +29,8 @@ export class Weather extends SitePlugin {
         const timeSinceSave =
             new Date().valueOf() - new Date(data.lastChange).valueOf();
 
-        timeSinceSave >= 1800000 ? this.getLatest() : this.render(data);
+        // 15min check
+        timeSinceSave >= 900000 ? this.getLatest() : this.render(data);
     }
 
     public onRefresh(): void {
