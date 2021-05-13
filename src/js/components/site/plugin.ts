@@ -22,5 +22,18 @@ export class SitePlugin {
 
     public onRefresh(): void {}
 
+    public getStorage(): any {
+        return JSON.parse(window.localStorage.getItem(this._name));
+    }
+
+    public readGlobalConfig(): any {
+        return JSON.parse(window.localStorage.getItem('settings'));
+    }
+
+    public setStorage(data): any {
+        data.lastChange = new Date().getTime();
+        window.localStorage.setItem(this._name, JSON.stringify(data));
+    }
+
     public destroy(): void {}
 }
