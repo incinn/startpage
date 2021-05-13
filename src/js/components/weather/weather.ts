@@ -1,4 +1,4 @@
-import { SitePlugin } from '../site/plugin';
+import { PluginStorage, SitePlugin } from '../site/plugin';
 
 export interface WeatherDisplayLite {
     description: string;
@@ -25,12 +25,16 @@ export class Weather extends SitePlugin {
     }
 
     public init(): void {
-        const data = this.getStorage();
-        const timeSinceSave =
-            new Date().valueOf() - new Date(data.lastChange).valueOf();
+        const data: PluginStorage = this.getStorage();
+        if (data) {
+            const timeSinceSave =
+                new Date().valueOf() - new Date(data.lastChange).valueOf();
 
-        // 15min check
-        timeSinceSave >= 900000 ? this.getLatest() : this.render(data);
+            // 15min check
+            timeSinceSave >= 900000 ? this.getLatest() : this.render(data.data);
+        } else {
+            this.getLatest();
+        }
     }
 
     public onRefresh(): void {
@@ -62,7 +66,7 @@ export class Weather extends SitePlugin {
                     };
 
                     this.render(weather);
-                    this.setStorage(weather);
+                    this.setStorage({ lastChange: 0, data: weather });
                 }
             }
         };

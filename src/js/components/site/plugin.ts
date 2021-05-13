@@ -1,3 +1,8 @@
+export interface PluginStorage {
+    lastChange: number;
+    data: any;
+}
+
 export class SitePlugin {
     public _name = 'Blank Plugin';
     public _refresh = false;
@@ -22,15 +27,19 @@ export class SitePlugin {
 
     public onRefresh(): void {}
 
-    public getStorage(): any {
-        return JSON.parse(window.localStorage.getItem(this._name));
+    public getStorage(): PluginStorage {
+        try {
+            return JSON.parse(window.localStorage.getItem(this._name));
+        } catch (error) {
+            return null;
+        }
     }
 
     public readGlobalConfig(): any {
         return JSON.parse(window.localStorage.getItem('settings'));
     }
 
-    public setStorage(data): any {
+    public setStorage(data: PluginStorage): void {
         data.lastChange = new Date().getTime();
         window.localStorage.setItem(this._name, JSON.stringify(data));
     }
