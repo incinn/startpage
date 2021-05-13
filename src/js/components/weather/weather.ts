@@ -55,19 +55,17 @@ export class Weather extends SitePlugin {
         );
         request.send();
 
-        request.onreadystatechange = (e) => {
-            if (request.readyState === 4) {
-                if (request.status === 200) {
-                    const resp = JSON.parse(request.responseText);
-                    const weather: WeatherDisplayLite = {
-                        description: resp.weather[0].description,
-                        temperature: resp.main.temp as number,
-                        iconCode: resp.weather[0].icon,
-                    };
+        request.onreadystatechange = () => {
+            if (request.readyState === 4 && request.status === 200) {
+                const resp = JSON.parse(request.responseText);
+                const weather: WeatherDisplayLite = {
+                    description: resp.weather[0].description,
+                    temperature: resp.main.temp as number,
+                    iconCode: resp.weather[0].icon,
+                };
 
-                    this.render(weather);
-                    this.setStorage({ lastChange: 0, data: weather });
-                }
+                this.render(weather);
+                this.setStorage({ lastChange: 0, data: weather });
             }
         };
     }
