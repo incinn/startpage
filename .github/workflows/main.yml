@@ -1,22 +1,23 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: [ main ]
+    push:
+        branches: [main]
 
 jobs:
-  build:
-    name: Deploy
-    runs-on: ubuntu-latest
-    steps:
-      - name: deploying to start.barnz.dev
-        uses: appleboy/ssh-action@master
-        with:
-          host: barnz.dev
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            cd /var/www/start.barnz.dev/startpage
-            git pull origin master
-            npx gulp build
+    build:
+        name: Deploy
+        runs-on: ubuntu-latest
+        steps:
+            - name: deploying to start.barnz.dev
+              uses: appleboy/ssh-action@master
+              with:
+                  host: barnz.dev
+                  username: ${{ secrets.SSH_USER }}
+                  key: ${{ secrets.SSH_KEY }}
+                  port: ${{ secrets.SSH_PORT }}
+                  script: |
+                      cd /var/www/start.barnz.dev/startpage
+                      git pull origin main
+                      npm i
+                      npx gulp build
