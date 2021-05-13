@@ -34,7 +34,7 @@ export class Weather extends SitePlugin {
     }
 
     public onRefresh(): void {
-        this.init();
+        this.getLatest();
     }
 
     private getLatest(): void {
