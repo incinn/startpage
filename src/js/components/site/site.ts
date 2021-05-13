@@ -22,8 +22,6 @@ export class Site {
             plugin.init();
         });
 
-        console.log('Site ready');
-
         // 30min refresh timer
         this.refreshTimer = setInterval(() => this.refresh(), 1800000);
     }
