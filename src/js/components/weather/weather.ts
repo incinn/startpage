@@ -1,4 +1,4 @@
-import { SitePlugin } from '../site/plugin';
+import { PluginStorage, SitePlugin } from '../site/plugin';
 
 export interface WeatherDisplayLite {
     description: string;
@@ -25,11 +25,20 @@ export class Weather extends SitePlugin {
     }
 
     public init(): void {
-        this.getLatest();
+        const data: PluginStorage = this.getStorage();
+        if (data) {
+            const timeSinceSave =
+                new Date().valueOf() - new Date(data.lastChange).valueOf();
+
+            // 15min check
+            timeSinceSave >= 900000 ? this.getLatest() : this.render(data.data);
+        } else {
+            this.getLatest();
+        }
     }
 
     public onRefresh(): void {
-        this.init();
+        this.getLatest();
     }
 
     private getLatest(): void {
@@ -46,18 +55,17 @@ export class Weather extends SitePlugin {
         );
         request.send();
 
-        request.onreadystatechange = (e) => {
-            if (request.readyState === 4) {
-                if (request.status === 200) {
-                    const resp = JSON.parse(request.responseText);
-                    const weather: WeatherDisplayLite = {
-                        description: resp.weather[0].description,
-                        temperature: resp.main.temp as number,
-                        iconCode: resp.weather[0].icon,
-                    };
+        request.onreadystatechange = () => {
+            if (request.readyState === 4 && request.status === 200) {
+                const resp = JSON.parse(request.responseText);
+                const weather: WeatherDisplayLite = {
+                    description: resp.weather[0].description,
+                    temperature: resp.main.temp as number,
+                    iconCode: resp.weather[0].icon,
+                };
 
-                    this.render(weather);
-                }
+                this.render(weather);
+                this.setStorage({ lastChange: 0, data: weather });
             }
         };
     }
