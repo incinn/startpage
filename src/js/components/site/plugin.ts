@@ -31,6 +31,7 @@ export class SitePlugin {
         try {
             return JSON.parse(window.localStorage.getItem(this._name));
         } catch (error) {
+            console.error(error);
             return null;
         }
     }
