@@ -6,8 +6,8 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     link(rel='stylesheet' href='main.css')
     title Start
-  body 
-    .wrapper
+  body.mountain
+    .wrapper#main
       button#settingsToggle
         img(src='img/icon/settings.svg')
       .wrapper__inner
@@ -18,7 +18,7 @@ html(lang="en")
         .wrapper__extra
           span#dateDisplay Monday 22nd January
           span
-            img#weatherIcon
+            img#weatherIcon(src='https://openweathermap.org/img/wn/04n.png')
             span#weatherDisplay Sunny 10 Degrees
         .wrapper__search#searchWrapper
           input#searchInput(type='search', autofocus)
@@ -28,4 +28,10 @@ html(lang="en")
       .settings__underlay#settingsUnderlay
       .settings__inner
         h2 Settings
+        h3 Theme
+        .themeSettings
+          button.themeToggle(data-id="mountain") Mountain
+          button.themeToggle(data-id="moon") Moon
+          button.themeToggle(data-id="beach") Beach
+        p Images from pexels
   script(src='bundle.js')

@@ -1,5 +1,6 @@
 import { Search } from '../search/search';
 import { DisplaySettings } from '../settings/settings';
+import { DisplayTheme } from '../theme/theme';
 import { Weather } from '../weather/weather';
 import { DisplayDate } from './../date/date';
 import { DisplayGreeting } from './../greeting/greeting';
@@ -15,6 +16,7 @@ export class Site {
         new Search(),
         new Weather(),
         new DisplaySettings(),
+        new DisplayTheme(),
     ];
 
     constructor() {}
