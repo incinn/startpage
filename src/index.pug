@@ -8,6 +8,8 @@ html(lang="en")
     title Start
   body 
     .wrapper
+      button#settingsToggle
+        img(src='img/icon/settings.svg')
       .wrapper__inner
         .wrapper__welcome
           h1 Good&nbsp;
@@ -21,4 +23,9 @@ html(lang="en")
         .wrapper__search#searchWrapper
           input#searchInput(type='search', autofocus)
           .searchHelp !g {query} Google &bull; !s {query} Startpage
+
+    .settings#settingsContainer
+      .settings__underlay#settingsUnderlay
+      .settings__inner
+        h2 Settings
   script(src='bundle.js')
