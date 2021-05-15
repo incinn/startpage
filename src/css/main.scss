@@ -216,6 +216,10 @@ body {
             display: flex;
             flex-direction: column;
 
+            #randomTheme {
+                padding: 1rem;
+            }
+
             &__options {
                 display: flex;
                 justify-content: space-between;
