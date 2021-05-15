@@ -24,7 +24,7 @@ body {
         background-image: url('img/background-moon.jpg');
 
         .wrapper {
-            background-color: rgba(#2d2d34, 0.95);
+            background-color: rgba(#130f0c, 0.9);
         }
     }
 
@@ -32,7 +32,7 @@ body {
         background-image: url('img/background-mountain.jpg');
 
         .wrapper {
-            background-color: rgba(#2d2d34, 0.8);
+            background-color: rgba(#353945, 0.85);
         }
     }
 
@@ -40,7 +40,15 @@ body {
         background-image: url('img/background-beach.jpg');
 
         .wrapper {
-            background-color: rgba(#2d2d34, 0.7);
+            background-color: rgba(#1a1e21, 0.88);
+        }
+    }
+
+    &.nlights {
+        background-image: url('img/background-nlights.jpg');
+
+        .wrapper {
+            background-color: rgba(#001b2c, 0.78);
         }
     }
 }
