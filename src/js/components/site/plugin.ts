@@ -45,5 +45,9 @@ export class SitePlugin {
         window.localStorage.setItem(this._name, JSON.stringify(data));
     }
 
+    public destroyStorage(): void {
+        window.localStorage.removeItem(this._name);
+    }
+
     public destroy(): void {}
 }
