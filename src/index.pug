@@ -6,8 +6,10 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     link(rel='stylesheet' href='main.css')
     title Start
-  body 
-    .wrapper
+  body
+    .wrapper#main
+      button#settingsToggle
+        img(src='img/icon/settings.svg')
       .wrapper__inner
         .wrapper__welcome
           h1 Good&nbsp;
@@ -16,9 +18,22 @@ html(lang="en")
         .wrapper__extra
           span#dateDisplay Monday 22nd January
           span
-            img#weatherIcon
+            img#weatherIcon(src='https://openweathermap.org/img/wn/04n.png')
             span#weatherDisplay Sunny 10 Degrees
         .wrapper__search#searchWrapper
           input#searchInput(type='search', autofocus)
           .searchHelp !g {query} Google &bull; !s {query} Startpage
+
+    .settings#settingsContainer
+      .settings__underlay#settingsUnderlay
+      .settings__inner
+        h2 Settings
+        h3 Theme
+        .themeSettings
+          .themeSettings__options
+            button.themeSettings__options__toggle(data-id="mountain") Mountain
+            button.themeSettings__options__toggle(data-id="moon") Moon
+            button.themeSettings__options__toggle(data-id="beach") Beach
+            button.themeSettings__options__toggle(data-id="nlights") Northern Lights
+          button#randomTheme Random
   script(src='bundle.js')
