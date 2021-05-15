@@ -18,19 +18,24 @@ export class DisplayTheme extends SitePlugin {
             console.error('Unable to find required elements');
             this.init = () => {};
         }
+
+        // random theme mode
+        this.setTheme(
+            this.themes[Math.floor(Math.random() * this.themes.length)]
+        );
     }
 
     public init(): void {
         this.themeToggles.forEach((toggle) => {
             toggle.addEventListener('click', () =>
-                this.handleToggle(toggle.dataset.id)
+                this.setTheme(toggle.dataset.id)
             );
         });
 
         this.showActiveTheme();
     }
 
-    private handleToggle(theme: string): void {
+    private setTheme(theme: string): void {
         if (this.themes.indexOf(theme) > -1) {
             this.themes.forEach((t) => {
                 this.container.classList.remove(t);
