@@ -30,8 +30,9 @@ html(lang="en")
         h2 Settings
         h3 Theme
         .themeSettings
-          button.themeToggle(data-id="mountain") Mountain
-          button.themeToggle(data-id="moon") Moon
-          button.themeToggle(data-id="beach") Beach
-        p Images from pexels
+          .themeSettings__options
+            button.themeSettings__options__toggle(data-id="mountain") Mountain
+            button.themeSettings__options__toggle(data-id="moon") Moon
+            button.themeSettings__options__toggle(data-id="beach") Beach
+            button.themeSettings__options__toggle(data-id="nlights") Northern Lights
   script(src='bundle.js')
