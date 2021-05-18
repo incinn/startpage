@@ -23,17 +23,5 @@ html(lang="en")
         .wrapper__search#searchWrapper
           input#searchInput(type='search', autofocus)
           .searchHelp !g {query} Google &bull; !s {query} Startpage
-
-    .settings#settingsContainer
-      .settings__underlay#settingsUnderlay
-      .settings__inner
-        h2 Settings
-        h3 Theme
-        .themeSettings
-          .themeSettings__options
-            button.themeSettings__options__toggle(data-id="mountain") Mountain
-            button.themeSettings__options__toggle(data-id="moon") Moon
-            button.themeSettings__options__toggle(data-id="cat") Cat
-            button.themeSettings__options__toggle(data-id="nlights") Northern Lights
-          button#randomTheme Random
+    include html/settings.pug
   script(src='bundle.js')
