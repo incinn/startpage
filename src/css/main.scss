@@ -1,5 +1,10 @@
 @import '../../node_modules/reset-css/sass/reset';
 
+@font-face {
+    font-family: 'Roboto Mono';
+    src: url('fonts/RobotoMono-VariableFont_wght.ttf') format('truetype');
+}
+
 :root {
     --background: #2d2d34;
     --dark: #2d2d34;
@@ -10,7 +15,7 @@
 }
 
 body {
-    font-family: monospace;
+    font-family: 'Roboto Mono', monospace;
     font-size: 16px;
     color: var(--light);
 

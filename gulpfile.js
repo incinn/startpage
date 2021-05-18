@@ -27,6 +27,7 @@ const pugLocation = './src/index.pug';
 const tsEntryLocation = './src/js/entry.ts';
 const tsLocation = './src/js/**/*';
 const imageLocation = './src/img/**/*';
+const fontLocation = './src/fonts/**/*';
 
 function cleanup() {
     return del([outputLocation + '/**/*']);
@@ -98,6 +99,10 @@ function copyImages() {
     return src(imageLocation).pipe(dest(outputLocation + '/img/'));
 }
 
+function copyFonts() {
+    return src(fontLocation).pipe(dest(outputLocation + '/fonts/'));
+}
+
 function revision() {
     return src(outputLocation + '/**/*.{css,js,jpg,jpeg,png}')
         .pipe(rev())
@@ -122,13 +127,13 @@ function watchSource() {
 
 exports.build = series(
     cleanup,
-    parallel(compilePug, compileSass, compileTypescript, copyImages),
+    parallel(compilePug, compileSass, compileTypescript, copyImages, copyFonts),
     revision,
     rewrite
 );
 exports.watch = series(
     cleanup,
-    parallel(compilePug, compileSass, compileTypescript, copyImages),
+    parallel(compilePug, compileSass, compileTypescript, copyImages, copyFonts),
     watchSource
 );
 exports.clean = cleanup;
