@@ -247,6 +247,8 @@ body {
                         &:after {
                             position: absolute;
                             content: url('img/icon/check.svg');
+                            height: 24px;
+                            width: 24px;
                             bottom: 0.5rem;
                             right: 0.5rem;
                             color: red;
