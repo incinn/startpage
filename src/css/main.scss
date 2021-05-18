@@ -38,11 +38,11 @@ body {
         }
     }
 
-    &.beach {
-        background-image: url('img/background-beach.jpg');
+    &.cat {
+        background-image: url('img/background-cat.jpg');
 
         .wrapper {
-            background-color: rgba(#1a1e21, 0.88);
+            background-color: rgba(#644b44, 0.75);
         }
     }
 
@@ -255,8 +255,8 @@ body {
                         background-image: url('img/background-mountain.jpg');
                     }
 
-                    &[data-id='beach'] {
-                        background-image: url('img/background-beach.jpg');
+                    &[data-id='cat'] {
+                        background-image: url('img/background-cat.jpg');
                     }
 
                     &[data-id='nlights'] {

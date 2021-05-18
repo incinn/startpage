@@ -6,7 +6,7 @@ export class DisplayTheme extends SitePlugin {
     private randomBtn: HTMLElement;
     private themeToggles: NodeListOf<HTMLElement>;
     private theme: string = 'mountain';
-    private themes = ['moon', 'mountain', 'beach', 'nlights'];
+    private themes = ['moon', 'mountain', 'cat', 'nlights'];
 
     constructor() {
         super();
