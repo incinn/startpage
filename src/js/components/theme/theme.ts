@@ -7,6 +7,7 @@ export class DisplayTheme extends SitePlugin {
     private themeToggles: NodeListOf<HTMLElement>;
     private theme: string = 'mountain';
     private themes = ['moon', 'mountain', 'cat', 'nlights'];
+    private data: any;
 
     constructor() {
         super();
@@ -31,10 +32,14 @@ export class DisplayTheme extends SitePlugin {
 
         this.randomBtn.addEventListener('click', () => this.randomTheme());
 
-        const data = this.getStorage();
-        data ? this.setTheme(data.data) : this.setRandomTheme();
+        this.getData();
+        this.data ? this.setTheme(this.data.data) : this.setRandomTheme();
 
         this.showActiveTheme();
+    }
+
+    private getData(): void {
+        this.data = this.getStorage();
     }
 
     private setTheme(theme: string): void {
@@ -49,6 +54,7 @@ export class DisplayTheme extends SitePlugin {
     private handleToggle(theme: string): void {
         if (this.themes.indexOf(theme) > -1) {
             this.setStorage({ lastChange: 0, data: theme });
+            this.getData();
             this.setTheme(theme);
         } else {
             console.error('invalid theme');
@@ -57,10 +63,15 @@ export class DisplayTheme extends SitePlugin {
 
     private showActiveTheme(): void {
         this.themeToggles.forEach((toggle) => {
-            if (toggle.dataset.id !== this.theme) {
-                toggle.classList.remove('active');
-            } else {
+            toggle.classList.remove('selected');
+            toggle.classList.remove('active');
+
+            if (toggle.dataset.id === this.theme) {
                 toggle.classList.add('active');
+            }
+
+            if (this.data && this.data.data == toggle.dataset.id) {
+                toggle.classList.add('selected');
             }
         });
     }
@@ -73,6 +84,7 @@ export class DisplayTheme extends SitePlugin {
 
     private randomTheme(): void {
         this.destroyStorage();
+        this.getData();
         this.setRandomTheme();
     }
 }
