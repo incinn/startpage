@@ -62,6 +62,8 @@ export class DisplayTheme extends SitePlugin {
     }
 
     private showActiveTheme(): void {
+        this.randomBtn.classList.remove('selected');
+
         this.themeToggles.forEach((toggle) => {
             toggle.classList.remove('selected');
             toggle.classList.remove('active');
@@ -74,6 +76,10 @@ export class DisplayTheme extends SitePlugin {
                 toggle.classList.add('selected');
             }
         });
+
+        if (!this.data) {
+            this.randomBtn.classList.add('selected');
+        }
     }
 
     private setRandomTheme(): void {
