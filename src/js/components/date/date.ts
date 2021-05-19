@@ -46,15 +46,14 @@ export class DisplayDate extends SitePlugin {
     }
 
     private renderDate(now: Date) {
-        this.container.innerHTML =
-            this.days[now.getDay()] +
-            ' ' +
-            this.formatDate(now.getDate()) +
-            ' ' +
-            this.months[now.getMonth()];
+        this.container.innerHTML = `${
+            this.days[now.getDay()]
+        } ${this.formatDate(now.getDate())} ${
+            this.months[now.getMonth()]
+        } &bull; Week ${this.getWeekNumber(now)}`;
     }
 
-    private formatDate(number): string {
+    private formatDate(number: number): string {
         const d = number % 10;
         return ~~((number % 100) / 10) === 1
             ? number + 'th'
@@ -65,5 +64,20 @@ export class DisplayDate extends SitePlugin {
             : d === 3
             ? number + 'rd'
             : number + 'th';
+    }
+
+    private getWeekNumber(date: Date): number {
+        date.setHours(0, 0, 0, 0);
+        date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
+        const weekOne = new Date(date.getFullYear(), 0, 4);
+        return (
+            1 +
+            Math.round(
+                ((date.getTime() - weekOne.getTime()) / 86400000 -
+                    3 +
+                    ((weekOne.getDay() + 6) % 7)) /
+                    7
+            )
+        );
     }
 }
