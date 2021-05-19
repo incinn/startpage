@@ -23,7 +23,9 @@ const terser = require('gulp-terser');
 
 const outputLocation = './dist';
 const sassLocation = './src/css/main.scss';
+const sassWatch = './src/css/**/*.scss';
 const pugLocation = './src/index.pug';
+const pugWatch = './src/**/*.pug';
 const tsEntryLocation = './src/js/entry.ts';
 const tsLocation = './src/js/**/*';
 const imageLocation = './src/img/**/*';
@@ -125,8 +127,8 @@ function rewrite() {
 }
 
 function watchSource() {
-    watch(sassLocation, compileSass);
-    watch(pugLocation, compilePug);
+    watch(sassWatch, compileSass);
+    watch(pugWatch, compilePug);
     watch(tsLocation, compileTypescript);
 }
 
