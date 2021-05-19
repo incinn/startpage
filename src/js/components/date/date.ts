@@ -46,14 +46,11 @@ export class DisplayDate extends SitePlugin {
     }
 
     private renderDate(now: Date) {
-        this.container.innerHTML =
-            this.days[now.getDay()] +
-            ' ' +
-            this.formatDate(now.getDate()) +
-            ' ' +
-            this.months[now.getMonth()] +
-            ' &bull; Week ' +
-            this.getWeekNumber(now);
+        this.container.innerHTML = `${
+            this.days[now.getDay()]
+        } ${this.formatDate(now.getDate())} ${
+            this.months[now.getMonth()]
+        } &bull; Week ${this.getWeekNumber(now)}`;
     }
 
     private formatDate(number): string {
