@@ -26,3 +26,5 @@ Images used in themes from [Pexels](https://www.pexels.com/).
 Icon assets used from [Material Icons](https://fonts.google.com/icons?selected=Material+Icons).
 
 Font used (Roboto Mono) from [Google Fonts](https://fonts.google.com/specimen/Roboto+Mono).
+
+Weather data from [OpenWeather](https://openweathermap.org/).
