@@ -36,6 +36,10 @@ function cleanup() {
     return del([outputLocation + '/**/*']);
 }
 
+function cleanInstall() {
+    return _PROD ? del('./node_modules/**/*') : null;
+}
+
 function compileSass() {
     return src(sassLocation)
         .pipe(gulpif(!_PROD, sourcemaps.init()))
@@ -143,7 +147,8 @@ exports.build = series(
         copyFavicon
     ),
     revision,
-    rewrite
+    rewrite,
+    cleanInstall
 );
 exports.watch = series(
     cleanup,
