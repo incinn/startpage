@@ -53,7 +53,7 @@ export class DisplayDate extends SitePlugin {
         } &bull; Week ${this.getWeekNumber(now)}`;
     }
 
-    private formatDate(number): string {
+    private formatDate(number: number): string {
         const d = number % 10;
         return ~~((number % 100) / 10) === 1
             ? number + 'th'
