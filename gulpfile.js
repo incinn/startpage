@@ -23,7 +23,9 @@ const terser = require('gulp-terser');
 
 const outputLocation = './dist';
 const sassLocation = './src/css/main.scss';
+const sassWatch = './src/css/**/*.scss';
 const pugLocation = './src/index.pug';
+const pugWatch = './src/**/*.pug';
 const tsEntryLocation = './src/js/entry.ts';
 const tsLocation = './src/js/**/*';
 const imageLocation = './src/img/**/*';
@@ -32,6 +34,10 @@ const faviconLocation = './src/favicon.ico';
 
 function cleanup() {
     return del([outputLocation + '/**/*']);
+}
+
+function cleanInstall() {
+    return _PROD ? del('./node_modules/**/*') : null;
 }
 
 function compileSass() {
@@ -125,8 +131,8 @@ function rewrite() {
 }
 
 function watchSource() {
-    watch(sassLocation, compileSass);
-    watch(pugLocation, compilePug);
+    watch(sassWatch, compileSass);
+    watch(pugWatch, compilePug);
     watch(tsLocation, compileTypescript);
 }
 
@@ -141,7 +147,8 @@ exports.build = series(
         copyFavicon
     ),
     revision,
-    rewrite
+    rewrite,
+    cleanInstall
 );
 exports.watch = series(
     cleanup,
