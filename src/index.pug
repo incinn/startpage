@@ -14,12 +14,11 @@ html(lang="en")
         .wrapper__welcome
           h1 Good&nbsp;
             span#welcomeContainer Day
-          .wrapper__welcome__time#timeContainer 00:00:00
-        .wrapper__extra
-          span#dateDisplay Monday 22nd January
-          span
-            img#weatherIcon(src='https://openweathermap.org/img/wn/04n.png')
-            span#weatherDisplay Sunny 10 Degrees
+        .wrapper__time#timeContainer 00:00:00
+        .wrapper__date#dateDisplay Monday 22nd January
+        .wrapper__weather
+          img#weatherIcon(src='https://openweathermap.org/img/wn/04n.png')
+          span#weatherDisplay Sunny 10 Degrees
         .wrapper__search#searchWrapper
           input#searchInput(type='search', autofocus)
           .searchHelp !g {query} Google &bull; !s {query} Startpage

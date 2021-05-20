@@ -34,14 +34,15 @@ body {
     padding: 1rem;
 
     &__inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 'greeting time' 'date weather' 'search search';
         width: 80vw;
         max-width: 1000px;
     }
 
     &__welcome {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        grid-area: greeting;
         font-size: 2rem;
 
         span {
@@ -49,17 +50,28 @@ body {
         }
     }
 
-    &__extra {
-        opacity: 0.5;
+    &__time {
+        grid-area: time;
         display: flex;
-        justify-content: space-between;
+        font-size: 2rem;
+        justify-content: flex-end;
+    }
+
+    &__date {
+        grid-area: date;
+        display: flex;
         align-items: center;
-        margin-bottom: 2rem;
+        opacity: 0.65;
+    }
+
+    &__weather {
+        grid-area: weather;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
 
         span {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            opacity: 0.65;
         }
 
         img#weatherIcon {
