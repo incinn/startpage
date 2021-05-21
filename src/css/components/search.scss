@@ -1,5 +1,11 @@
 .wrapper__search {
+    grid-area: search;
     position: relative;
+    margin-top: 1.5rem;
+
+    @include for-mobile {
+        margin: 3rem 0 2.5rem 0;
+    }
 
     &.showHelp {
         input {
