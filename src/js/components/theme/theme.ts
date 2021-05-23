@@ -13,7 +13,7 @@ export class DisplayTheme extends SitePlugin {
         super();
         this.container = document.body;
         this.themeToggles = document.querySelectorAll(
-            '.themeSettings__options__toggle'
+            '.themeSettings__options__toggle:not(#randomTheme)'
         );
         this.randomBtn = document.getElementById('randomTheme');
 
