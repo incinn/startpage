@@ -53,6 +53,9 @@
         z-index: 12;
         width: 70vw;
         max-width: 800px;
+        @include for-mobile {
+            width: 95vw;
+        }
 
         h2 {
             font-size: 1.5rem;
