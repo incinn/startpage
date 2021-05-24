@@ -7,15 +7,21 @@ export enum SearchMode {
 
 export class Search extends SitePlugin {
     public _name = 'Search';
-    private searchInput: any;
-    private searchWrapper: any;
+    private searchInput: HTMLInputElement;
+    private searchWrapper: HTMLElement;
+    private searchBtn: HTMLButtonElement;
     private mode: SearchMode;
 
     constructor() {
         super();
         this.mode = SearchMode.assign;
-        this.searchInput = document.getElementById('searchInput');
+        this.searchInput = document.getElementById(
+            'searchInput'
+        ) as HTMLInputElement;
         this.searchWrapper = document.getElementById('searchWrapper');
+        this.searchBtn = document.getElementById(
+            'searchButton'
+        ) as HTMLButtonElement;
     }
 
     public init(): void {
@@ -25,6 +31,8 @@ export class Search extends SitePlugin {
             this.handleKeyPress(event);
             this.toggleHelp();
         });
+
+        this.searchBtn.addEventListener('click', () => this.submitSearch());
     }
 
     private handleKeyPress(event: KeyboardEvent): void {
@@ -47,12 +55,14 @@ export class Search extends SitePlugin {
 
     private submitSearch(): void {
         const query = encodeURI(this.searchInput.value);
-        if (this.mode === SearchMode.assign) {
-            window.location.assign('https://duckduckgo.com/?q=' + query);
-        } else if (this.mode === SearchMode.replace) {
-            window.location.replace('https://duckduckgo.com/?q=' + query);
-        } else {
-            console.error(`Search mode ${this.mode} invalid`);
+        if (query.length > 0) {
+            if (this.mode === SearchMode.assign) {
+                window.location.assign('https://duckduckgo.com/?q=' + query);
+            } else if (this.mode === SearchMode.replace) {
+                window.location.replace('https://duckduckgo.com/?q=' + query);
+            } else {
+                console.error(`Search mode ${this.mode} invalid`);
+            }
         }
     }
 }
