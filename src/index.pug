@@ -11,16 +11,10 @@ html(lang="en")
       button#settingsToggle
         img(src='img/icon/settings.svg')
       .wrapper__inner
-        .wrapper__welcome
-          h1 Good&nbsp;
-            span#welcomeContainer Day
-        .wrapper__time#timeContainer 00:00:00
-        .wrapper__date#dateDisplay Monday 22nd January
-        .wrapper__weather
-          img#weatherIcon(src='https://openweathermap.org/img/wn/04n.png')
-          span#weatherDisplay Sunny 10 Degrees
-        .wrapper__search#searchWrapper
-          input#searchInput(type='search', autofocus)
-          .searchHelp !g {query} Google &bull; !s {query} Startpage
+        include html/welcome.pug
+        include html/time.pug
+        include html/date.pug
+        include html/weather.pug
+        include html/search.pug
     include html/settings.pug
   script(src='bundle.js')
