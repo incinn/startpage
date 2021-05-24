@@ -60,6 +60,12 @@
             width: 95vw;
             padding: 1.5rem;
         }
+    }
+
+    &__area {
+        &:not(:last-of-type) {
+            margin-bottom: 1.5rem;
+        }
 
         h2 {
             font-size: 1.5rem;
