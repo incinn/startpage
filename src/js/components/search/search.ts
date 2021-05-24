@@ -7,17 +7,21 @@ export enum SearchMode {
 
 export class Search extends SitePlugin {
     public _name = 'Search';
-    private searchInput: any;
-    private searchWrapper: any;
-    private searchBtn: any;
+    private searchInput: HTMLInputElement;
+    private searchWrapper: HTMLElement;
+    private searchBtn: HTMLButtonElement;
     private mode: SearchMode;
 
     constructor() {
         super();
         this.mode = SearchMode.assign;
-        this.searchInput = document.getElementById('searchInput');
+        this.searchInput = document.getElementById(
+            'searchInput'
+        ) as HTMLInputElement;
         this.searchWrapper = document.getElementById('searchWrapper');
-        this.searchBtn = document.getElementById('searchButton');
+        this.searchBtn = document.getElementById(
+            'searchButton'
+        ) as HTMLButtonElement;
     }
 
     public init(): void {
