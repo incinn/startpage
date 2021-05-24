@@ -1,0 +1,11 @@
+.wrapper__search#searchWrapper
+    input#searchInput(type='search', autofocus="on", autocomplete="off")
+    button#searchButton.wrapper__search__submitBtn
+        img(src="img/icon/search.svg", alt="")
+    .searchHelp
+        span.searchHelp__item
+            .searchHelp__input !g {query}
+            span to search Google
+        span.searchHelp__item
+            .searchHelp__input !s {query}
+            span to search Startpage
