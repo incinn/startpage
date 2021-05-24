@@ -47,6 +47,10 @@ body {
         text-transform: uppercase;
         letter-spacing: 5px;
         font-weight: bold;
+
+        @include for-mobile {
+            letter-spacing: 2px;
+        }
     }
 
     &__options {
@@ -54,6 +58,10 @@ body {
         grid-template-columns: repeat(auto-fill, calc(120px + 1rem));
         justify-content: space-between;
         margin: -0.5rem;
+
+        @include for-mobile {
+            grid-template-columns: repeat(auto-fill, calc(100px + 0.5rem));
+        }
 
         &__toggle {
             position: relative;
@@ -68,6 +76,11 @@ body {
             background-repeat: no-repeat;
             background-size: cover;
             transition: all 200ms;
+
+            @include for-mobile {
+                width: 100px;
+                height: 100px;
+            }
 
             &:hover {
                 box-shadow: 0px 0px 10px 1px rgba(black, 0.5);
