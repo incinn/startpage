@@ -1,5 +1,7 @@
 # Startpage
 
+![image](https://user-images.githubusercontent.com/77964259/119580154-c9f6ed80-bdb7-11eb-9629-fb5bd120c795.png)
+
 A simple start page written in Typescript and Sass.
 
 View it live [here](https://start.barnz.dev).
