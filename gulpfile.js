@@ -37,7 +37,10 @@ function cleanup() {
 }
 
 function cleanInstall() {
-    return _PROD ? del('./node_modules/**/*') : null;
+    return new Promise((res, rej) => {
+        if (_PROD) del('./node_modules/**/*');
+        res();
+    });
 }
 
 function compileSass() {
