@@ -14,7 +14,7 @@
     "dotenv": "^9.0.0",
     "dotenv-webpack": "^7.0.2",
     "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
+    "gulp-autoprefixer": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
     "gulp-if": "^3.0.0",
     "gulp-pug-3": "^1.2.2",
