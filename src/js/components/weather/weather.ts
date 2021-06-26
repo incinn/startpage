@@ -6,13 +6,24 @@ export interface WeatherDisplayLite {
     iconCode: string;
 }
 
+export interface WeatherSettings {
+    country: string;
+    city: string;
+    units: WetherTempUnits;
+}
+
+export enum WetherTempUnits {
+    m = 'metric',
+    f = 'fahrenheit',
+}
+
 export class Weather extends SitePlugin {
     public _name = 'Display weather';
     public _refresh = true;
     private container: HTMLElement;
+    private settings: WeatherSettings;
     private icon: any;
-    private weatherApi =
-        'https://api.openweathermap.org/data/2.5/weather?units=metric';
+    private weatherApi = 'https://api.openweathermap.org/data/2.5/weather';
     private iconUrl = 'https://openweathermap.org/img/wn/';
     private apiKey = process.env.OPENWEATHERMAP_API_KEY;
     private weatherCity = process.env.OPENWEATHERMAP_CITY;
@@ -22,6 +33,15 @@ export class Weather extends SitePlugin {
         super();
         this.container = document.getElementById('weatherDisplay');
         this.icon = document.getElementById('weatherIcon');
+
+        this.settings = this.getStorage()?.data.settings;
+        if (!this.settings) {
+            this.settings = {
+                country: 'GB',
+                city: 'London',
+                units: WetherTempUnits.m,
+            };
+        }
     }
 
     public init(): void {
@@ -31,7 +51,9 @@ export class Weather extends SitePlugin {
                 new Date().valueOf() - new Date(data.lastChange).valueOf();
 
             // 15min check
-            timeSinceSave >= 900000 ? this.getLatest() : this.render(data.data);
+            timeSinceSave >= 900000
+                ? this.getLatest()
+                : this.render(data.data.weather);
         } else {
             this.getLatest();
         }
@@ -46,10 +68,12 @@ export class Weather extends SitePlugin {
         request.open(
             'GET',
             this.weatherApi +
-                '&q=' +
-                this.weatherCity +
+                '?q=' +
+                this.settings.city +
                 ',' +
-                this.weatherCountry +
+                this.settings.country +
+                '&units=' +
+                this.settings.units +
                 '&appid=' +
                 this.apiKey
         );
@@ -65,7 +89,13 @@ export class Weather extends SitePlugin {
                 };
 
                 this.render(weather);
-                this.setStorage({ lastChange: 0, data: weather });
+                this.setStorage({
+                    lastChange: 0,
+                    data: {
+                        weather: weather,
+                        settings: this.settings,
+                    },
+                });
             }
         };
     }
