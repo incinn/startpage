@@ -13,8 +13,8 @@ export interface WeatherSettings {
 }
 
 export enum WetherTempUnits {
-    m = 'metric',
-    f = 'fahrenheit',
+    metric = 'metric',
+    imperial = 'imperial',
 }
 
 export class Weather extends SitePlugin {
@@ -26,8 +26,6 @@ export class Weather extends SitePlugin {
     private weatherApi = 'https://api.openweathermap.org/data/2.5/weather';
     private iconUrl = 'https://openweathermap.org/img/wn/';
     private apiKey = process.env.OPENWEATHERMAP_API_KEY;
-    private weatherCity = process.env.OPENWEATHERMAP_CITY;
-    private weatherCountry = process.env.OPENWEATHERMAP_COUNTRY;
 
     constructor() {
         super();
@@ -39,7 +37,7 @@ export class Weather extends SitePlugin {
             this.settings = {
                 country: 'GB',
                 city: 'London',
-                units: WetherTempUnits.m,
+                units: WetherTempUnits.metric,
             };
         }
     }
@@ -102,7 +100,9 @@ export class Weather extends SitePlugin {
 
     private render(weather: WeatherDisplayLite): void {
         if (weather) {
-            this.container.innerHTML = `${weather.description} &bull; ${weather.temperature}&deg;C`;
+            const tempUnit =
+                this.settings.units === WetherTempUnits.metric ? 'C' : 'F';
+            this.container.innerHTML = `${weather.description} &bull; ${weather.temperature}&deg;${tempUnit}`;
             this.icon.src = this.iconUrl + weather.iconCode + '.png';
         }
     }
