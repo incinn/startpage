@@ -1,0 +1,33 @@
+.weatherSettings {
+    display: flex;
+    flex-direction: column;
+
+    label {
+        margin: 0 0 0.5rem 0;
+    }
+
+    select,
+    input[type='text'] {
+        margin: 0 0 0.5rem 0;
+        padding: 0.5rem;
+        background-color: #fff;
+        border: 2px solid rgba(black, 0.2);
+        border-radius: 3px;
+
+        &:focus-visible,
+        &:focus {
+            outline: none;
+            border-color: var(--dark);
+        }
+    }
+
+    button {
+        padding: 0.75rem;
+        background: var(--primary);
+        color: var(--light);
+        font-weight: bold;
+        border: none;
+        border-radius: 3px;
+        align-self: flex-start;
+    }
+}

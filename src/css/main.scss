@@ -13,6 +13,7 @@
     --gray: #e2dcde;
     --danger: #b97375;
     --success: #98c9a3;
+    --primary: #206ead;
 }
 
 body {
@@ -108,3 +109,4 @@ body {
 @import 'components/settings';
 @import 'components/themes';
 @import 'components/search';
+@import 'components/weather';
