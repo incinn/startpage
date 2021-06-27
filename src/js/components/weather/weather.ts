@@ -133,6 +133,6 @@ export class Weather extends SitePlugin {
     }
 
     private cleanString(a: string): string {
-        return a.replace(/[^a-zA-Z]/gi, '');
+        return a.replace(/[^a-zA-Z ]/gi, '');
     }
 }
