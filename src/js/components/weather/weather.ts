@@ -21,6 +21,7 @@ export class Weather extends SitePlugin {
     public _name = 'Display weather';
     public _refresh = true;
     private container: HTMLElement;
+    private saveButton: HTMLButtonElement;
     private settings: WeatherSettings;
     private icon: any;
     private weatherApi = 'https://api.openweathermap.org/data/2.5/weather';
@@ -31,6 +32,9 @@ export class Weather extends SitePlugin {
         super();
         this.container = document.getElementById('weatherDisplay');
         this.icon = document.getElementById('weatherIcon');
+        this.saveButton = document.getElementById(
+            'weatherSave'
+        ) as HTMLButtonElement;
 
         this.settings = this.getStorage()?.data.settings;
         if (!this.settings) {
@@ -55,6 +59,10 @@ export class Weather extends SitePlugin {
         } else {
             this.getLatest();
         }
+
+        this.saveButton.addEventListener('click', () =>
+            this.handleSaveButton()
+        );
     }
 
     public onRefresh(): void {
@@ -63,17 +71,10 @@ export class Weather extends SitePlugin {
 
     private getLatest(): void {
         const request = new XMLHttpRequest();
+
         request.open(
             'GET',
-            this.weatherApi +
-                '?q=' +
-                this.settings.city +
-                ',' +
-                this.settings.country +
-                '&units=' +
-                this.settings.units +
-                '&appid=' +
-                this.apiKey
+            `${this.weatherApi}?q=${this.settings.city},${this.settings.country}&units=${this.settings.units}&appid=${this.apiKey}`
         );
         request.send();
 
@@ -96,6 +97,10 @@ export class Weather extends SitePlugin {
                 });
             }
         };
+
+        request.onerror = () => {
+            console.error('Failed fetching weather data');
+        };
     }
 
     private render(weather: WeatherDisplayLite): void {
@@ -105,5 +110,29 @@ export class Weather extends SitePlugin {
             this.container.innerHTML = `${weather.description} &bull; ${weather.temperature}&deg;${tempUnit}`;
             this.icon.src = this.iconUrl + weather.iconCode + '.png';
         }
+    }
+
+    private handleSaveButton(): void {
+        const countryEl = document.getElementById(
+            'weatherCountry'
+        ) as HTMLSelectElement;
+        const cityEl = document.getElementById(
+            'weatherCity'
+        ) as HTMLInputElement;
+        const country = this.cleanString(countryEl.value);
+        const city = this.cleanString(cityEl.value);
+
+        if (country === this.settings.country && city === this.settings.city) {
+            return;
+        }
+
+        this.settings.country = country;
+        this.settings.city = city;
+
+        this.getLatest();
+    }
+
+    private cleanString(a: string): string {
+        return a.replace(/[^a-zA-Z]/gi, '');
     }
 }

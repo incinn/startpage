@@ -1,0 +1,12 @@
+.settings__area
+    h2 Weather
+    label(for="weatherCountry") Weather Country 
+        select#weatherCountry(name="weatherCountry")
+            each country in countries
+                option(value=country.code) #{country.name}
+    br
+    label(for="weatherCity") Weather City 
+        input#weatherCity(type="text", name="weatherCity")
+
+    button#weatherSave Update
+    
