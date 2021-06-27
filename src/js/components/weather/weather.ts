@@ -22,6 +22,8 @@ export class Weather extends SitePlugin {
     public _refresh = true;
     private container: HTMLElement;
     private saveButton: HTMLButtonElement;
+    private countryEl: HTMLSelectElement;
+    private cityEl: HTMLInputElement;
     private settings: WeatherSettings;
     private icon: any;
     private weatherApi = 'https://api.openweathermap.org/data/2.5/weather';
@@ -35,6 +37,12 @@ export class Weather extends SitePlugin {
         this.saveButton = document.getElementById(
             'weatherSave'
         ) as HTMLButtonElement;
+        this.countryEl = document.getElementById(
+            'weatherCountry'
+        ) as HTMLSelectElement;
+        this.cityEl = document.getElementById(
+            'weatherCity'
+        ) as HTMLInputElement;
 
         this.settings = this.getStorage()?.data.settings;
         if (!this.settings) {
@@ -63,10 +71,19 @@ export class Weather extends SitePlugin {
         this.saveButton.addEventListener('click', () =>
             this.handleSaveButton()
         );
+
+        this.updateSettingsValues();
     }
 
     public onRefresh(): void {
         this.getLatest();
+    }
+
+    private updateSettingsValues(): void {
+        if (this.cityEl && this.countryEl) {
+            this.cityEl.value = this.settings.city;
+            this.countryEl.value = this.settings.country;
+        }
     }
 
     private getLatest(): void {
@@ -113,14 +130,8 @@ export class Weather extends SitePlugin {
     }
 
     private handleSaveButton(): void {
-        const countryEl = document.getElementById(
-            'weatherCountry'
-        ) as HTMLSelectElement;
-        const cityEl = document.getElementById(
-            'weatherCity'
-        ) as HTMLInputElement;
-        const country = this.cleanString(countryEl.value);
-        const city = this.cleanString(cityEl.value);
+        const country = this.cleanString(this.countryEl.value);
+        const city = this.cleanString(this.cityEl.value);
 
         if (country === this.settings.country && city === this.settings.city) {
             return;
@@ -129,6 +140,7 @@ export class Weather extends SitePlugin {
         this.settings.country = country;
         this.settings.city = city;
 
+        this.updateSettingsValues();
         this.getLatest();
     }
 
