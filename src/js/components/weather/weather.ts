@@ -22,8 +22,10 @@ export class Weather extends SitePlugin {
     public _refresh = true;
     private container: HTMLElement;
     private saveButton: HTMLButtonElement;
+    private resetButton: HTMLButtonElement;
     private countryEl: HTMLSelectElement;
     private cityEl: HTMLInputElement;
+    private weatherInfoEl: HTMLElement;
     private settings: WeatherSettings;
     private icon: any;
     private weatherApi = 'https://api.openweathermap.org/data/2.5/weather';
@@ -37,12 +39,16 @@ export class Weather extends SitePlugin {
         this.saveButton = document.getElementById(
             'weatherSave'
         ) as HTMLButtonElement;
+        this.resetButton = document.getElementById(
+            'weatherReset'
+        ) as HTMLButtonElement;
         this.countryEl = document.getElementById(
             'weatherCountry'
         ) as HTMLSelectElement;
         this.cityEl = document.getElementById(
             'weatherCity'
         ) as HTMLInputElement;
+        this.weatherInfoEl = document.getElementById('weatherInfo');
 
         this.settings = this.getStorage()?.data.settings;
         if (!this.settings) {
@@ -72,6 +78,10 @@ export class Weather extends SitePlugin {
             this.handleSaveButton()
         );
 
+        this.resetButton.addEventListener('click', () => {
+            this.handleResetButton();
+        });
+
         this.updateSettingsValues();
     }
 
@@ -92,39 +102,53 @@ export class Weather extends SitePlugin {
         weather
             .then((weather) => {
                 this.render(weather);
-                this.setStorage({
-                    lastChange: 0,
-                    data: {
-                        weather: weather,
-                        settings: this.settings,
-                    },
-                });
+                this.updateStorage(weather);
             })
             .catch((e) => {
                 console.error(e);
             });
     }
 
-    private queryWeather(): Promise<WeatherDisplayLite | null> {
+    private updateStorage(data: WeatherDisplayLite): void {
+        this.setStorage({
+            lastChange: 0,
+            data: {
+                weather: data,
+                settings: this.settings,
+            },
+        });
+    }
+
+    private queryWeather(
+        settings?: WeatherSettings
+    ): Promise<WeatherDisplayLite | null> {
         return new Promise((resolve, reject) => {
             const request = new XMLHttpRequest();
+            let query: string;
 
-            request.open(
-                'GET',
-                `${this.weatherApi}?q=${this.settings.city},${this.settings.country}&units=${this.settings.units}&appid=${this.apiKey}`
-            );
+            if (settings) {
+                query = `${this.weatherApi}?q=${settings.city},${settings.country}&units=${settings.units}&appid=${this.apiKey}`;
+            } else {
+                query = `${this.weatherApi}?q=${this.settings.city},${this.settings.country}&units=${this.settings.units}&appid=${this.apiKey}`;
+            }
+
+            request.open('GET', query);
             request.send();
 
             request.onreadystatechange = () => {
-                if (request.readyState === 4 && request.status === 200) {
-                    const resp = JSON.parse(request.responseText);
-                    const weather: WeatherDisplayLite = {
-                        description: resp.weather[0].description,
-                        temperature: resp.main.temp as number,
-                        iconCode: resp.weather[0].icon,
-                    };
+                if (request.readyState === 4) {
+                    if (request.status === 200) {
+                        const resp = JSON.parse(request.responseText);
+                        const weather: WeatherDisplayLite = {
+                            description: resp.weather[0].description,
+                            temperature: resp.main.temp as number,
+                            iconCode: resp.weather[0].icon,
+                        };
 
-                    resolve(weather);
+                        resolve(weather);
+                    } else {
+                        reject('Invalid location');
+                    }
                 }
             };
 
@@ -144,6 +168,8 @@ export class Weather extends SitePlugin {
     }
 
     private handleSaveButton(): void {
+        this.cityEl.classList.remove('error');
+
         const country = this.cleanString(this.countryEl.value);
         const city = this.cleanString(this.cityEl.value);
 
@@ -151,11 +177,31 @@ export class Weather extends SitePlugin {
             return;
         }
 
-        this.settings.country = country;
-        this.settings.city = city;
+        const weather = this.queryWeather({
+            country,
+            city,
+            units: this.settings.units,
+        });
 
-        this.updateSettingsValues();
-        this.setWeather();
+        weather
+            .then((weather) => {
+                this.settings.country = country;
+                this.settings.city = city;
+                this.render(weather);
+                this.updateStorage(weather);
+            })
+            .catch((e) => {
+                console.error(e);
+                this.weatherInfoEl.innerHTML = 'error: ' + e;
+                this.cityEl.classList.add('error');
+            });
+    }
+
+    private handleResetButton(): void {
+        this.countryEl.value = this.settings.country;
+        this.cityEl.value = this.settings.city;
+        this.cityEl.classList.remove('error');
+        this.weatherInfoEl.innerHTML = '';
     }
 
     private cleanString(a: string): string {

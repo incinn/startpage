@@ -7,4 +7,7 @@
                 option(value=country.code) #{country.name}
         label(for="weatherCity") City Name
         input#weatherCity(type="text", name="weatherCity")
-        button#weatherSave Update
+        .weatherSettings__update
+            button.btn.btn-primary#weatherSave Update
+            button.btn.btn-light#weatherReset Reset
+            span#weatherInfo.weatherSettings__update__text

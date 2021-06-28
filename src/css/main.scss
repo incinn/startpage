@@ -11,9 +11,12 @@
     --dark: #2d2d34;
     --light: #f1e4e8;
     --gray: #e2dcde;
+    --gray-dark: #{darken(#e2dcde, 10%)};
     --danger: #b97375;
+    --danger-dark: #{darken(#b97375, 25%)};
     --success: #98c9a3;
     --primary: #206ead;
+    --primary-dark: #{darken(#206ead, 10%)};
 }
 
 body {
