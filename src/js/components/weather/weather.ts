@@ -153,7 +153,7 @@ export class Weather extends SitePlugin {
             };
 
             request.onerror = () => {
-                reject('Error when fetching weather');
+                reject('Error fetching weather');
             };
         });
     }
@@ -167,6 +167,7 @@ export class Weather extends SitePlugin {
         }
     }
 
+    // todo: debounce to prevent spam
     private handleSaveButton(): void {
         this.cityEl.classList.remove('error');
 
@@ -187,12 +188,16 @@ export class Weather extends SitePlugin {
             .then((weather) => {
                 this.settings.country = country;
                 this.settings.city = city;
+
+                this.cityEl.classList.remove('error');
+                this.weatherInfoEl.innerHTML = '';
+
                 this.render(weather);
                 this.updateStorage(weather);
             })
             .catch((e) => {
                 console.error(e);
-                this.weatherInfoEl.innerHTML = 'error: ' + e;
+                this.weatherInfoEl.innerHTML = e;
                 this.cityEl.classList.add('error');
             });
     }
