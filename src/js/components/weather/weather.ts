@@ -62,10 +62,10 @@ export class Weather extends SitePlugin {
 
             // 15min check
             timeSinceSave >= 900000
-                ? this.getLatest()
+                ? this.setWeather()
                 : this.render(data.data.weather);
         } else {
-            this.getLatest();
+            this.setWeather();
         }
 
         this.saveButton.addEventListener('click', () =>
@@ -76,7 +76,7 @@ export class Weather extends SitePlugin {
     }
 
     public onRefresh(): void {
-        this.getLatest();
+        this.setWeather();
     }
 
     private updateSettingsValues(): void {
@@ -86,24 +86,11 @@ export class Weather extends SitePlugin {
         }
     }
 
-    private getLatest(): void {
-        const request = new XMLHttpRequest();
+    private setWeather(): void {
+        const weather = this.queryWeather();
 
-        request.open(
-            'GET',
-            `${this.weatherApi}?q=${this.settings.city},${this.settings.country}&units=${this.settings.units}&appid=${this.apiKey}`
-        );
-        request.send();
-
-        request.onreadystatechange = () => {
-            if (request.readyState === 4 && request.status === 200) {
-                const resp = JSON.parse(request.responseText);
-                const weather: WeatherDisplayLite = {
-                    description: resp.weather[0].description,
-                    temperature: resp.main.temp as number,
-                    iconCode: resp.weather[0].icon,
-                };
-
+        weather
+            .then((weather) => {
                 this.render(weather);
                 this.setStorage({
                     lastChange: 0,
@@ -112,12 +99,39 @@ export class Weather extends SitePlugin {
                         settings: this.settings,
                     },
                 });
-            }
-        };
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+    }
 
-        request.onerror = () => {
-            console.error('Failed fetching weather data');
-        };
+    private queryWeather(): Promise<WeatherDisplayLite | null> {
+        return new Promise((resolve, reject) => {
+            const request = new XMLHttpRequest();
+
+            request.open(
+                'GET',
+                `${this.weatherApi}?q=${this.settings.city},${this.settings.country}&units=${this.settings.units}&appid=${this.apiKey}`
+            );
+            request.send();
+
+            request.onreadystatechange = () => {
+                if (request.readyState === 4 && request.status === 200) {
+                    const resp = JSON.parse(request.responseText);
+                    const weather: WeatherDisplayLite = {
+                        description: resp.weather[0].description,
+                        temperature: resp.main.temp as number,
+                        iconCode: resp.weather[0].icon,
+                    };
+
+                    resolve(weather);
+                }
+            };
+
+            request.onerror = () => {
+                reject('Error when fetching weather');
+            };
+        });
     }
 
     private render(weather: WeatherDisplayLite): void {
@@ -141,7 +155,7 @@ export class Weather extends SitePlugin {
         this.settings.city = city;
 
         this.updateSettingsValues();
-        this.getLatest();
+        this.setWeather();
     }
 
     private cleanString(a: string): string {
