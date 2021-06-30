@@ -58,8 +58,15 @@
         align-items: center;
 
         &__text {
-            color: var(--danger-dark);
             margin-right: auto;
+
+            &.error {
+                color: var(--danger-dark);
+            }
+
+            &.success {
+                color: var(--success);
+            }
         }
     }
 }

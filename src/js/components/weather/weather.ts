@@ -189,24 +189,37 @@ export class Weather extends SitePlugin {
                 this.settings.country = country;
                 this.settings.city = city;
 
-                this.cityEl.classList.remove('error');
-                this.weatherInfoEl.innerHTML = '';
-
+                this.updateInfoText(true, 'Location updated');
                 this.render(weather);
                 this.updateStorage(weather);
+
+                setTimeout(() => {
+                    this.handleResetButton();
+                }, 2000);
             })
             .catch((e) => {
                 console.error(e);
-                this.weatherInfoEl.innerHTML = e;
+                this.updateInfoText(false, e);
                 this.cityEl.classList.add('error');
             });
     }
 
     private handleResetButton(): void {
         this.countryEl.value = this.settings.country;
+
         this.cityEl.value = this.settings.city;
         this.cityEl.classList.remove('error');
+
+        this.weatherInfoEl.classList.remove('error');
+        this.weatherInfoEl.classList.remove('success');
         this.weatherInfoEl.innerHTML = '';
+    }
+
+    private updateInfoText(success: boolean, text: string): void {
+        this.weatherInfoEl.classList.remove('error');
+        this.weatherInfoEl.classList.remove('success');
+        this.weatherInfoEl.classList.add(success ? 'success' : 'error');
+        this.weatherInfoEl.innerHTML = text;
     }
 
     private cleanString(a: string): string {
