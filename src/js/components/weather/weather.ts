@@ -1,3 +1,4 @@
+import { capitalizeFirstLetter } from '../../helpers/text';
 import { PluginStorage, SitePlugin } from '../site/plugin';
 
 export interface WeatherDisplayLite {
@@ -172,7 +173,7 @@ export class Weather extends SitePlugin {
         this.cityEl.classList.remove('error');
 
         const country = this.cleanString(this.countryEl.value);
-        const city = this.cleanString(this.cityEl.value);
+        const city = capitalizeFirstLetter(this.cleanString(this.cityEl.value));
 
         if (country === this.settings.country && city === this.settings.city) {
             return;
