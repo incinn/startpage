@@ -27,6 +27,7 @@ export class Weather extends SitePlugin {
     private countryEl: HTMLSelectElement;
     private cityEl: HTMLInputElement;
     private weatherInfoEl: HTMLElement;
+    private weatherDisplayWrapper: HTMLElement;
     private settings: WeatherSettings;
     private icon: any;
     private weatherApi = 'https://api.openweathermap.org/data/2.5/weather';
@@ -50,6 +51,9 @@ export class Weather extends SitePlugin {
             'weatherCity'
         ) as HTMLInputElement;
         this.weatherInfoEl = document.getElementById('weatherInfo');
+        this.weatherDisplayWrapper = document.getElementById(
+            'weatherDisplayWrapper'
+        );
 
         this.settings = this.getStorage()?.data.settings;
         if (!this.settings) {
@@ -165,6 +169,7 @@ export class Weather extends SitePlugin {
                 this.settings.units === WetherTempUnits.metric ? 'C' : 'F';
             this.container.innerHTML = `${weather.description} &bull; ${weather.temperature}&deg;${tempUnit}`;
             this.icon.src = this.iconUrl + weather.iconCode + '.png';
+            this.weatherDisplayWrapper.title = `${this.settings.city}, ${this.settings.country}`;
         }
     }
 
