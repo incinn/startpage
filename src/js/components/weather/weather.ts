@@ -30,6 +30,7 @@ export class Weather extends SitePlugin {
     private weatherDisplayWrapper: HTMLElement;
     private settings: WeatherSettings;
     private icon: any;
+    private lastSave: Date;
     private weatherApi = 'https://api.openweathermap.org/data/2.5/weather';
     private iconUrl = 'https://openweathermap.org/img/wn/';
     private apiKey = process.env.OPENWEATHERMAP_API_KEY;
@@ -63,6 +64,8 @@ export class Weather extends SitePlugin {
                 units: WetherTempUnits.metric,
             };
         }
+
+        this.lastSave = new Date();
     }
 
     public init(): void {
@@ -79,9 +82,15 @@ export class Weather extends SitePlugin {
             this.setWeather();
         }
 
-        this.saveButton.addEventListener('click', () =>
-            this.handleSaveButton()
-        );
+        this.saveButton.addEventListener('click', () => {
+            const now = new Date();
+            const diff = now.getTime() - this.lastSave.getTime();
+
+            if (diff > 2000) {
+                this.handleSaveButton();
+                this.lastSave = now;
+            }
+        });
 
         this.resetButton.addEventListener('click', () => {
             this.handleResetButton();
