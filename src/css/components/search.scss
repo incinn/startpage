@@ -46,7 +46,7 @@
         border-top-right-radius: 6px;
         cursor: pointer;
         border: none;
-        transition: background 150ms;
+        transition: background var(--transition-short);
 
         &:hover {
             background: rgba(white, 0.15);
@@ -69,7 +69,7 @@
         border-bottom-right-radius: 6px;
         border-bottom-left-radius: 6px;
         box-shadow: 0px 0px 10px 1px #f1e4e850;
-        transition: all 200ms;
+        transition: all var(--transition-medium);
         display: flex;
         justify-content: space-evenly;
 

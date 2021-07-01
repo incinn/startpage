@@ -75,7 +75,7 @@ body {
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
-            transition: all 200ms;
+            transition: all var(--transition-medium);
 
             @include for-mobile {
                 width: 100px;

@@ -17,6 +17,17 @@
     --success: #98c9a3;
     --primary: #206ead;
     --primary-dark: #{darken(#206ead, 10%)};
+    --transition-short: 150ms ease-in-out;
+    --transition-medium: 250ms ease-in-out;
+    --transition-long: 350ms ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --transition-short: 0ms;
+        --transition-medium: 0ms;
+        --transition-long: 0ms;
+    }
 }
 
 body {

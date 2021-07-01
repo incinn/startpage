@@ -27,7 +27,7 @@
     bottom: 0;
     left: 0;
     z-index: 10;
-    transition: opacity 200ms;
+    transition: opacity var(--transition-medium);
 
     &.show {
         display: flex;
