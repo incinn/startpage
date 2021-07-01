@@ -93,7 +93,7 @@ export class Weather extends SitePlugin {
         });
 
         this.resetButton.addEventListener('click', () => {
-            this.handleResetButton();
+            this.handleResetButton(true);
         });
 
         this.updateSettingsValues();
@@ -209,8 +209,8 @@ export class Weather extends SitePlugin {
                 this.updateStorage(weather);
 
                 setTimeout(() => {
-                    this.handleResetButton();
-                }, 2000);
+                    this.handleResetButton(false);
+                }, 4000);
             })
             .catch((e) => {
                 console.error(e);
@@ -219,10 +219,12 @@ export class Weather extends SitePlugin {
             });
     }
 
-    private handleResetButton(): void {
-        this.countryEl.value = this.settings.country;
+    private handleResetButton(updateValues: boolean): void {
+        if (updateValues) {
+            this.countryEl.value = this.settings.country;
+            this.cityEl.value = this.settings.city;
+        }
 
-        this.cityEl.value = this.settings.city;
         this.cityEl.classList.remove('error');
 
         this.weatherInfoEl.classList.remove('error');
