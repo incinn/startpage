@@ -182,7 +182,6 @@ export class Weather extends SitePlugin {
         }
     }
 
-    // todo: debounce to prevent spam
     private handleSaveButton(): void {
         this.cityEl.classList.remove('error');
 
