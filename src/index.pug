@@ -12,11 +12,17 @@ html(lang="en")
     .wrapper#main
       button#settingsToggle
         img(src='img/icon/settings.svg')
-      .wrapper__inner
+      main.wrapper__inner
         include html/welcome.pug
         include html/time.pug
         include html/date.pug
         include html/weather.pug
         include html/search.pug
+      footer
+        span#versionInfo v1.0.1
+        span weather data from 
+          a(href="https://openweathermap.org") openweathermap.org
+        span built by 
+          a(href="https://barnz.dev") barnz.dev
     include html/settings.pug
   script(src='bundle.js')

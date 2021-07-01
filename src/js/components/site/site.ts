@@ -5,6 +5,7 @@ import { Weather } from '../weather/weather';
 import { DisplayDate } from './../date/date';
 import { DisplayGreeting } from './../greeting/greeting';
 import { DisplayTime } from './../time/time';
+declare var __VERSION: string;
 
 export class Site {
     private refreshTimer: any;
@@ -28,6 +29,8 @@ export class Site {
 
         // 30min refresh timer
         this.refreshTimer = setInterval(() => this.refresh(), 1800000);
+
+        this.displayVersion();
     }
 
     public refresh(): void {
@@ -42,5 +45,10 @@ export class Site {
         });
 
         clearInterval(this.refreshTimer);
+    }
+
+    private displayVersion(): void {
+        const element: HTMLElement = document.getElementById('versionInfo');
+        element.innerHTML = `v${__VERSION}`;
     }
 }

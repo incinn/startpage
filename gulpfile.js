@@ -18,7 +18,8 @@ const cleanCSS = require('gulp-clean-css');
 const pugLinter = require('gulp-pug-linter');
 const pug = require('gulp-pug-3');
 
-const webpack = require('webpack-stream');
+const webpack = require('webpack');
+const webpackStream = require('webpack-stream');
 const terser = require('gulp-terser');
 
 const outputLocation = './dist';
@@ -71,8 +72,9 @@ function compilePug() {
 function compileTypescript() {
     return src(tsLocation)
         .pipe(
-            webpack({
+            webpackStream({
                 mode: _PROD ? 'production' : 'development',
+                devtool: _PROD ? '' : 'source-map',
                 entry: tsEntryLocation,
                 module: {
                     rules: [
@@ -87,6 +89,11 @@ function compileTypescript() {
                     new Dotenv({
                         path: './.env',
                     }),
+                    new webpack.DefinePlugin({
+                        __VERSION: JSON.stringify(
+                            require('./package.json').version
+                        ),
+                    }),
                 ],
                 resolve: {
                     extensions: ['.tsx', '.ts', '.js'],
@@ -96,6 +103,11 @@ function compileTypescript() {
                 },
             })
         )
+        .pipe(dest(outputLocation));
+}
+
+function uglifyJs() {
+    return src(outputLocation + '/*.js')
         .pipe(
             terser({
                 mangle: true,
@@ -149,6 +161,7 @@ exports.build = series(
         copyFonts,
         copyFavicon
     ),
+    uglifyJs,
     revision,
     rewrite,
     cleanInstall

@@ -119,6 +119,33 @@ body {
             height: 50px;
         }
     }
+
+    footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        opacity: 0.1;
+        font-size: 0.6rem;
+        transition: opacity var(--transition-short);
+
+        // @include for-mobile {
+        text-align: center;
+        // }
+
+        span:not(:last-of-type) {
+            margin-right: 1rem;
+        }
+
+        a {
+            color: var(--light);
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+    }
 }
 
 @import 'components/buttons';
