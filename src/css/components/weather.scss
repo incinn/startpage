@@ -1,5 +1,17 @@
 .wrapper__weather {
-    cursor: help;
+    position: relative;
+
+    #weatherDisplayLocation {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        opacity: 0.35;
+        font-size: 0.7rem;
+
+        @include for-mobile {
+            display: none;
+        }
+    }
 }
 
 .weatherSettings {

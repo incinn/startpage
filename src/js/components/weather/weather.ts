@@ -27,7 +27,7 @@ export class Weather extends SitePlugin {
     private countryEl: HTMLSelectElement;
     private cityEl: HTMLInputElement;
     private weatherInfoEl: HTMLElement;
-    private weatherDisplayWrapper: HTMLElement;
+    private weatherDisplayLocation: HTMLElement;
     private settings: WeatherSettings;
     private icon: any;
     private lastSave: number;
@@ -52,8 +52,8 @@ export class Weather extends SitePlugin {
             'weatherCity'
         ) as HTMLInputElement;
         this.weatherInfoEl = document.getElementById('weatherInfo');
-        this.weatherDisplayWrapper = document.getElementById(
-            'weatherDisplayWrapper'
+        this.weatherDisplayLocation = document.getElementById(
+            'weatherDisplayLocation'
         );
 
         this.settings = this.getStorage()?.data.settings;
@@ -178,7 +178,7 @@ export class Weather extends SitePlugin {
                 this.settings.units === WetherTempUnits.metric ? 'C' : 'F';
             this.container.innerHTML = `${weather.description} &bull; ${weather.temperature}&deg;${tempUnit}`;
             this.icon.src = this.iconUrl + weather.iconCode + '.png';
-            this.weatherDisplayWrapper.title = `${this.settings.city}, ${this.settings.country}`;
+            this.weatherDisplayLocation.innerHTML = `${this.settings.city}, ${this.settings.country}`;
         }
     }
 
