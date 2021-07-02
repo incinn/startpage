@@ -46,32 +46,6 @@
     display: flex;
     flex-direction: column;
 
-    label {
-        text-transform: uppercase;
-        font-size: 0.7rem;
-        margin: 0 0 0.75rem 0;
-    }
-
-    select,
-    input[type='text'] {
-        margin: 0 0 1rem 0;
-        padding: 0.5rem;
-        background-color: #fff;
-        border: 2px solid var(--gray);
-        border-radius: 4px;
-
-        &:focus-visible,
-        &:focus {
-            outline: none;
-            border-color: var(--gray-darker);
-        }
-
-        &.error {
-            border-color: var(--danger-dark);
-            background-color: var(--danger);
-        }
-    }
-
     &__update {
         display: flex;
         align-items: center;
