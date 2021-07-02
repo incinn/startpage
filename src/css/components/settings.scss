@@ -46,15 +46,20 @@
     }
 
     &__inner {
-        background-color: var(--light);
         padding: 2rem;
-        border-radius: 6px;
-        color: var(--dark);
+        border-radius: 15px;
+        background-color: var(--dark-90);
+        color: var(--light);
         z-index: 12;
         width: 70vw;
         max-width: 800px;
         max-height: 70vh;
         overflow-y: auto;
+
+        @supports (backdrop-filter: blur()) {
+            background-color: var(--dark-70);
+            backdrop-filter: blur(4px);
+        }
 
         @include for-mobile {
             width: 95vw;
@@ -64,7 +69,7 @@
 
     &__area {
         &:not(:last-of-type) {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2.5rem;
         }
 
         h2 {
