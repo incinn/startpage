@@ -116,11 +116,8 @@ body {
         padding: 0.5rem;
         opacity: 0.1;
         font-size: 0.6rem;
-        transition: opacity var(--transition-short);
-
-        // @include for-mobile {
         text-align: center;
-        // }
+        transition: opacity var(--transition-short);
 
         span:not(:last-of-type) {
             margin-right: 1rem;
