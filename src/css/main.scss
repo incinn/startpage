@@ -10,7 +10,11 @@
     --background: #2d2d34;
     --dark: #2d2d34;
     --light: #f1e4e8;
+    --light-10: #{rgba(#f1e4e8, 0.1)};
     --light-20: #{rgba(#f1e4e8, 0.2)};
+    --light-30: #{rgba(#f1e4e8, 0.3)};
+    --light-40: #{rgba(#f1e4e8, 0.4)};
+    --light-50: #{rgba(#f1e4e8, 0.5)};
     --gray: #e2dcde;
     --gray-dark: #{darken(#e2dcde, 10%)};
     --danger: #b97375;
