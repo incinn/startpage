@@ -1,5 +1,22 @@
 .wrapper__weather {
     position: relative;
+    grid-area: weather;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    @include for-mobile {
+        justify-content: center;
+    }
+
+    span {
+        opacity: 0.65;
+    }
+
+    img#weatherIcon {
+        width: 50px;
+        height: 50px;
+    }
 
     #weatherDisplayLocation {
         position: absolute;
