@@ -9,10 +9,34 @@
 :root {
     --background: #2d2d34;
     --dark: #2d2d34;
+    --dark-70: #{rgba(#2d2d34, 0.7)};
+    --dark-90: #{rgba(#2d2d34, 0.9)};
     --light: #f1e4e8;
+    --light-10: #{rgba(#f1e4e8, 0.1)};
+    --light-20: #{rgba(#f1e4e8, 0.2)};
+    --light-30: #{rgba(#f1e4e8, 0.3)};
+    --light-40: #{rgba(#f1e4e8, 0.4)};
+    --light-50: #{rgba(#f1e4e8, 0.5)};
     --gray: #e2dcde;
+    --gray-dark: #{darken(#e2dcde, 10%)};
+    --gray-darker: #{darken(#e2dcde, 30%)};
     --danger: #b97375;
+    --danger-dark: #{darken(#b97375, 15%)};
     --success: #98c9a3;
+    --primary: #206ead;
+    --primary-dark: #{darken(#206ead, 10%)};
+
+    --transition-short: 150ms ease-in-out;
+    --transition-medium: 250ms ease-in-out;
+    --transition-long: 350ms ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --transition-short: 0ms;
+        --transition-medium: 0ms;
+        --transition-long: 0ms;
+    }
 }
 
 body {
@@ -84,27 +108,33 @@ body {
         }
     }
 
-    &__weather {
-        grid-area: weather;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
+    footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0.5rem;
+        opacity: 0.1;
+        font-size: 0.6rem;
+        text-align: center;
+        transition: opacity var(--transition-short);
 
-        @include for-mobile {
-            justify-content: center;
+        span:not(:last-of-type) {
+            margin-right: 1rem;
         }
 
-        span {
-            opacity: 0.65;
+        a {
+            color: var(--light);
         }
 
-        img#weatherIcon {
-            width: 50px;
-            height: 50px;
+        &:hover {
+            opacity: 1;
         }
     }
 }
 
+@import 'components/buttons';
 @import 'components/settings';
 @import 'components/themes';
 @import 'components/search';
+@import 'components/weather';

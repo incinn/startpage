@@ -1,7 +1,7 @@
 .wrapper__search {
     grid-area: search;
     position: relative;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
 
     @include for-mobile {
         margin: 3rem 0 2.5rem 0;
@@ -22,16 +22,28 @@
     input {
         width: 100%;
         font-size: 1.5rem;
-        padding: 0.5rem;
-        padding-right: 3rem;
+        padding: 0.7rem;
+        padding-right: 3.2rem;
         background-color: transparent;
-        border: 1px solid var(--light);
+        border: 2px solid var(--light-50);
         color: var(--light);
         border-radius: 6px;
+        transition-property: background-color border-color;
+        transition: var(--transition-short);
 
-        &:focus {
-            box-shadow: 0px 0px 10px 1px #f1e4e850;
+        &::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+        }
+
+        &:focus,
+        &:valid {
+            background-color: var(--light-10);
+            border-color: var(--light-20);
             outline: none;
+
+            @supports (backdrop-filter: blur()) {
+                backdrop-filter: blur(4px);
+            }
         }
     }
 
@@ -40,13 +52,13 @@
         right: 0;
         top: 0;
         bottom: 0;
-        padding: 0.75rem;
+        padding: 0.95rem;
         background-color: transparent;
         border-bottom-right-radius: 6px;
         border-top-right-radius: 6px;
         cursor: pointer;
         border: none;
-        transition: background 150ms;
+        transition: background var(--transition-short);
 
         &:hover {
             background: rgba(white, 0.15);
@@ -61,17 +73,20 @@
         position: absolute;
         visibility: hidden;
         opacity: 0;
-        background-color: var(--light);
+        background-color: var(--light-30);
         color: var(--background);
         left: 0;
         right: 0;
         padding: 1rem;
         border-bottom-right-radius: 6px;
         border-bottom-left-radius: 6px;
-        box-shadow: 0px 0px 10px 1px #f1e4e850;
-        transition: all 200ms;
+        transition: all var(--transition-medium);
         display: flex;
         justify-content: space-evenly;
+
+        @supports (backdrop-filter: blur()) {
+            backdrop-filter: blur(4px);
+        }
 
         &__item {
             display: flex;

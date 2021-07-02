@@ -27,7 +27,7 @@
     bottom: 0;
     left: 0;
     z-index: 10;
-    transition: opacity 200ms;
+    transition: opacity var(--transition-medium);
 
     &.show {
         display: flex;
@@ -46,19 +46,30 @@
     }
 
     &__inner {
-        background-color: var(--light);
         padding: 2rem;
-        border-radius: 6px;
-        color: var(--dark);
+        border-radius: 15px;
+        background-color: var(--dark-90);
+        color: var(--light);
         z-index: 12;
         width: 70vw;
         max-width: 800px;
         max-height: 70vh;
         overflow-y: auto;
 
+        @supports (backdrop-filter: blur()) {
+            background-color: var(--dark-70);
+            backdrop-filter: blur(4px);
+        }
+
         @include for-mobile {
             width: 95vw;
             padding: 1.5rem;
+        }
+    }
+
+    &__area {
+        &:not(:last-of-type) {
+            margin-bottom: 2.5rem;
         }
 
         h2 {
@@ -69,8 +80,35 @@
 
         p {
             margin-bottom: 1.5rem;
+            font-size: 0.75rem;
             line-height: 1.5;
             opacity: 0.85;
+        }
+
+        label {
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            margin: 0 0 0.75rem 0;
+        }
+
+        select,
+        input[type='text'] {
+            margin: 0 0 1rem 0;
+            padding: 0.5rem;
+            background-color: #fff;
+            border: 2px solid var(--gray);
+            border-radius: 4px;
+
+            &:focus-visible,
+            &:focus {
+                outline: none;
+                border-color: var(--gray-darker);
+            }
+
+            &.error {
+                border-color: var(--danger-dark);
+                background-color: var(--danger);
+            }
         }
     }
 }

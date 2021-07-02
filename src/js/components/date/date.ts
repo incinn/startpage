@@ -1,9 +1,15 @@
 import { SitePlugin } from '../site/plugin';
 
+interface DateSettings {
+    showWeekNumber: boolean;
+}
+
 export class DisplayDate extends SitePlugin {
     public _name = 'Display Date';
     public _refresh = true;
+    private settings: DateSettings;
     private container: HTMLElement;
+    private showWeekNumberInput: HTMLInputElement;
     private months = [
         'January',
         'February',
@@ -30,15 +36,38 @@ export class DisplayDate extends SitePlugin {
 
     constructor() {
         super();
+
         this.container = document.getElementById('dateDisplay');
         if (!this.container) {
             console.error('Unable to find dateDisplay');
             this.init = () => {};
         }
+
+        this.showWeekNumberInput = document.getElementById(
+            'showWeekNumber'
+        ) as HTMLInputElement;
+
+        this.settings = this.getStorage()?.data;
+        if (!this.settings) {
+            this.settings = {
+                showWeekNumber: true,
+            };
+        }
     }
 
     public init(): void {
         this.renderDate(new Date());
+        this.showWeekNumberInput.checked = this.settings.showWeekNumber;
+
+        this.showWeekNumberInput.addEventListener('change', (e) =>
+            this.handleWeekToggle(e)
+        );
+    }
+
+    private handleWeekToggle(e: any): void {
+        this.settings.showWeekNumber = e.target.checked;
+        this.setStorage({ lastChange: 0, data: this.settings });
+        this.init();
     }
 
     public onRefresh(): void {
@@ -46,11 +75,13 @@ export class DisplayDate extends SitePlugin {
     }
 
     private renderDate(now: Date) {
-        this.container.innerHTML = `${
-            this.days[now.getDay()]
-        } ${this.formatDate(now.getDate())} ${
-            this.months[now.getMonth()]
-        } &bull; Week ${this.getWeekNumber(now)}`;
+        const date = `${this.days[now.getDay()]} ${this.formatDate(
+            now.getDate()
+        )} ${this.months[now.getMonth()]}`;
+
+        this.container.innerHTML = this.settings.showWeekNumber
+            ? date + ` &bull; Week ${this.getWeekNumber(now)}`
+            : date;
     }
 
     private formatDate(number: number): string {

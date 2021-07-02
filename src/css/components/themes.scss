@@ -8,7 +8,7 @@ body {
         background-image: url('img/background-moon.jpg');
 
         .wrapper {
-            background-color: rgba(#130f0c, 0.92);
+            background-color: rgba(#130f0c, 0.95);
         }
     }
 
@@ -47,6 +47,10 @@ body {
         text-transform: uppercase;
         letter-spacing: 5px;
         font-weight: bold;
+
+        @include for-mobile {
+            letter-spacing: 2px;
+        }
     }
 
     &__options {
@@ -55,19 +59,28 @@ body {
         justify-content: space-between;
         margin: -0.5rem;
 
+        @include for-mobile {
+            grid-template-columns: repeat(auto-fill, calc(100px + 0.5rem));
+        }
+
         &__toggle {
             position: relative;
             width: 120px;
             height: 120px;
             margin: 0.5rem;
-            border: 4px solid var(--dark);
+            border: 4px solid var(--gray-dark);
             border-radius: 8px;
             color: transparent;
             cursor: pointer;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
-            transition: all 200ms;
+            transition: all var(--transition-medium);
+
+            @include for-mobile {
+                width: 100px;
+                height: 100px;
+            }
 
             &:hover {
                 box-shadow: 0px 0px 10px 1px rgba(black, 0.5);
