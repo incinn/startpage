@@ -88,4 +88,27 @@ export class Bookmarks extends SitePlugin {
 
         return li;
     }
+
+    private grabFavicon(url: string): Promise<string> {
+        const image = new Image();
+        image.crossOrigin = '*';
+        image.src = url;
+
+        document.body.appendChild(image);
+
+        return new Promise((resolve, reject) => {
+            image.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.height = image.height;
+                canvas.width = image.width;
+                ctx.drawImage(image, 0, 0);
+                resolve(canvas.toDataURL('image/png'));
+            };
+
+            image.onerror = () => {
+                reject();
+            };
+        });
+    }
 }
