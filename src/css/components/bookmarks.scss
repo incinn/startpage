@@ -1,0 +1,58 @@
+.wrapper__bookmarks {
+    grid-area: bookmarks;
+    margin-top: 3rem;
+
+    ul {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-gap: 1.5rem;
+        width: 80vw;
+        max-width: 1000px;
+
+        @include for-mobile {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-gap: 2rem;
+        }
+
+        li {
+            a {
+                display: flex;
+                align-items: center;
+                background-color: var(--light-40);
+                border-radius: 4px;
+                text-decoration: none;
+                color: var(--dark);
+                transition: background-color var(--transition-medium);
+                padding: 0.5rem;
+
+                @supports (backdrop-filter: blur()) {
+                    backdrop-filter: blur(4px);
+                }
+
+                &:hover {
+                    background-color: var(--light);
+
+                    img {
+                        opacity: 1;
+                    }
+                }
+
+                img {
+                    width: 24px;
+                    height: 22px;
+                    margin-right: 0.25rem;
+                    opacity: 0.4;
+                    transition: opacity var(--transition-medium);
+                }
+
+                span {
+                    width: 100%;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
