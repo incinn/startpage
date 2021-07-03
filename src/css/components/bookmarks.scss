@@ -1,6 +1,12 @@
 .wrapper__bookmarks {
     grid-area: bookmarks;
     margin-top: 3rem;
+    transition: opacity var(--transition-long);
+
+    &.hidden {
+        visibility: hidden;
+        opacity: 0;
+    }
 
     ul {
         display: grid;
