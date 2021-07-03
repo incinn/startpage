@@ -14,19 +14,19 @@ export class Bookmarks extends SitePlugin {
 
     private bookmarks: Bookmark[] = [
         {
-            favicon: 'https://www.startpage.com/favicon.ico',
-            url: 'https://startpage.com',
-            text: 'startpage',
+            favicon: 'https://barnz.dev/barnz.dev-favicon.png',
+            url: 'https://barnz.dev',
+            text: 'barnz.dev',
+        },
+        {
+            favicon: 'https://news.ycombinator.com/favicon.ico',
+            url: 'https://news.ycombinator.com',
+            text: 'hacker news',
         },
         {
             favicon: 'https://www.youtube.com/favicon.ico',
             url: 'https://youtube.com',
             text: 'youtube',
-        },
-        {
-            favicon: 'https://old.reddit.com/favicon.ico',
-            url: 'https://old.reddit.com',
-            text: 'old reddit',
         },
         {
             favicon: 'https://www.duckduckgo.com/favicon.ico',
@@ -42,11 +42,6 @@ export class Bookmarks extends SitePlugin {
             favicon: 'https://www.startpage.com/favicon.ico',
             url: 'https://startpage.com',
             text: 'startpage',
-        },
-        {
-            favicon: 'https://news.ycombinator.com/favicon.ico',
-            url: 'https://news.ycombinator.com',
-            text: 'hacker news',
         },
     ];
 
@@ -71,7 +66,7 @@ export class Bookmarks extends SitePlugin {
     private buildBookmark(b: Bookmark): HTMLElement {
         const li = document.createElement('li');
         const a = document.createElement('a');
-        const img = document.createElement('img');
+        const img = new Image();
         const span = document.createElement('span');
 
         a.appendChild(img);
@@ -83,6 +78,7 @@ export class Bookmarks extends SitePlugin {
         a.title = b.text;
 
         img.src = b.favicon;
+        img.loading = 'lazy';
 
         span.innerHTML = b.text;
 
