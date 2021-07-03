@@ -1,4 +1,4 @@
-import { SitePlugin } from '../site/plugin';
+import { PluginStorage, SitePlugin } from '../site/plugin';
 
 interface Bookmark {
     favicon: string;
@@ -6,13 +6,19 @@ interface Bookmark {
     text: string;
 }
 
+interface BookmarksSettings {
+    show: boolean;
+    showIcons: boolean;
+}
+
 export class Bookmarks extends SitePlugin {
     public _name = 'Bookmarks';
     public _refresh = false;
 
     private bookmarksContainerEl: HTMLElement;
+    private settings: BookmarksSettings;
 
-    private bookmarks: Bookmark[] = [
+    private initialBookmarks: Bookmark[] = [
         {
             favicon: 'https://barnz.dev/barnz.dev-favicon.png',
             url: 'https://barnz.dev',
@@ -51,6 +57,16 @@ export class Bookmarks extends SitePlugin {
         this.bookmarksContainerEl = document.getElementById(
             'bookmarksContainer'
         ) as HTMLElement;
+
+        this.settings = this.getStorage()?.data.settings;
+        if (!this.settings) {
+            this.settings = {
+                show: true,
+                showIcons: true,
+            };
+
+            this.updateStorage(this.initialBookmarks);
+        }
     }
 
     public init(): void {
@@ -58,18 +74,38 @@ export class Bookmarks extends SitePlugin {
     }
 
     private render(): void {
-        this.bookmarks.forEach((bookmark) => {
-            this.bookmarksContainerEl.appendChild(this.buildBookmark(bookmark));
+        if (this.settings.show) {
+            const bookmarks: Bookmark[] = this.getStorage()?.data.bookmarks;
+
+            bookmarks.forEach((bookmark) => {
+                this.bookmarksContainerEl.appendChild(
+                    this.buildBookmark(bookmark)
+                );
+            });
+        }
+    }
+
+    private updateStorage(data: Bookmark[]): void {
+        this.setStorage({
+            lastChange: 0,
+            data: {
+                bookmarks: data,
+                settings: this.settings,
+            },
         });
     }
 
     private buildBookmark(b: Bookmark): HTMLElement {
         const li = document.createElement('li');
         const a = document.createElement('a');
-        const img = new Image();
         const span = document.createElement('span');
+        let img: HTMLImageElement;
 
-        a.appendChild(img);
+        if (this.settings.showIcons) {
+            img = new Image();
+            a.appendChild(img);
+        }
+
         a.appendChild(span);
         li.appendChild(a);
 
@@ -77,10 +113,12 @@ export class Bookmarks extends SitePlugin {
         a.target = '_blank';
         a.title = b.text;
 
-        img.src = b.favicon;
-        img.loading = 'lazy';
+        if (this.settings.showIcons) {
+            img.src = b.favicon;
+            img.loading = 'lazy';
+        }
 
-        span.innerHTML = b.text;
+        span.innerText = b.text;
 
         return li;
     }
