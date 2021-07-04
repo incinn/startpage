@@ -226,14 +226,13 @@ export class Bookmarks extends SitePlugin {
     }
 
     private handleBookmarkRemoveButton(e: any): void {
-        const targetId = e.srcElement.dataset.id;
+        const bookmarks = this.getStorage()?.data.bookmarks.filter(
+            (bookmark) => {
+                return bookmark.id !== e.srcElement.dataset.id;
+            }
+        );
 
-        let bm: Bookmark[] = this.getStorage()?.data.bookmarks;
-        const newArray = bm.filter((bookmark) => {
-            return bookmark.id !== targetId;
-        });
-
-        this.updateStorage(newArray);
+        this.updateStorage(bookmarks);
         this.render();
     }
 
@@ -241,19 +240,30 @@ export class Bookmarks extends SitePlugin {
         const url = this.newBookmarkUrlEl.value;
         const text = this.newBookmarkTextEl.value;
 
-        if (url.length > 11 && text.length > 1) {
-            const newBm: Bookmark = {
-                id: uuid(),
-                favicon: url + '/favicon.ico',
-                url,
-                text,
-            };
+        this.newBookmarkUrlEl.classList.remove('error');
+        this.newBookmarkTextEl.classList.remove('error');
 
-            this.updateStorage([...this.getStorage()?.data.bookmarks, newBm]);
-            this.render();
-
-            this.newBookmarkUrlEl.value = '';
-            this.newBookmarkTextEl.value = '';
+        if (url.length < 11 || !/^(http|https):\/\/[^ "]+$/.test(url)) {
+            this.newBookmarkUrlEl.classList.add('error');
+            return;
         }
+
+        if (text.length < 1) {
+            this.newBookmarkTextEl.classList.add('error');
+            return;
+        }
+
+        const newBm: Bookmark = {
+            id: uuid(),
+            favicon: url + '/favicon.ico',
+            url,
+            text,
+        };
+
+        this.updateStorage([...this.getStorage()?.data.bookmarks, newBm]);
+        this.render();
+
+        this.newBookmarkUrlEl.value = '';
+        this.newBookmarkTextEl.value = '';
     }
 }
