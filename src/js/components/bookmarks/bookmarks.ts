@@ -21,6 +21,9 @@ export class Bookmarks extends SitePlugin {
     private bookmarksSettingsContainerEl: HTMLElement;
     private settings: BookmarksSettings;
 
+    private showBookmarksInput: HTMLInputElement;
+    private showIconsInput: HTMLInputElement;
+
     private newBookmarkUrlEl: HTMLInputElement;
     private newBookmarkTextEl: HTMLInputElement;
     private newBookmarkSubmitBtn: HTMLButtonElement;
@@ -63,6 +66,13 @@ export class Bookmarks extends SitePlugin {
             'listBookmarks'
         ) as HTMLElement;
 
+        this.showBookmarksInput = document.getElementById(
+            'showBookmarks'
+        ) as HTMLInputElement;
+        this.showIconsInput = document.getElementById(
+            'showIcons'
+        ) as HTMLInputElement;
+
         this.newBookmarkUrlEl = document.getElementById(
             'newBookmarkUrl'
         ) as HTMLInputElement;
@@ -87,6 +97,17 @@ export class Bookmarks extends SitePlugin {
     public init(): void {
         this.render();
         this.renderSettings();
+
+        this.showBookmarksInput.checked = this.settings.show;
+        this.showIconsInput.checked = this.settings.showIcons;
+
+        this.showBookmarksInput.addEventListener('change', (e) => {
+            this.handleShowBookmarksInputToggle(e);
+        });
+
+        this.showIconsInput.addEventListener('change', (e) => {
+            this.handleShowIconsInputInputToggle(e);
+        });
 
         this.newBookmarkSubmitBtn.addEventListener('click', () => {
             this.handleNewBookmarkButton();
@@ -211,6 +232,17 @@ export class Bookmarks extends SitePlugin {
                 reject();
             };
         });
+    }
+
+    private handleShowBookmarksInputToggle(e: any): void {
+        this.settings.show = e.target.checked;
+        // this.updateStorage();
+        this.renderDisplay();
+    }
+
+    private handleShowIconsInputInputToggle(e: any): void {
+        this.settings.showIcons = e.target.checked;
+        this.renderDisplay();
     }
 
     private handleBookmarkRemoveButton(e: any): void {
