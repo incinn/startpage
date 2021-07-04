@@ -237,13 +237,13 @@ export class Bookmarks extends SitePlugin {
     }
 
     private handleNewBookmarkButton(): void {
-        const url = this.newBookmarkUrlEl.value;
+        const rawUrl = this.newBookmarkUrlEl.value;
         const text = this.newBookmarkTextEl.value;
 
         this.newBookmarkUrlEl.classList.remove('error');
         this.newBookmarkTextEl.classList.remove('error');
 
-        if (url.length < 11 || !/^(http|https):\/\/[^ "]+$/.test(url)) {
+        if (rawUrl.length < 11 || !/^(http|https):\/\/[^ "]+$/.test(rawUrl)) {
             this.newBookmarkUrlEl.classList.add('error');
             return;
         }
@@ -253,10 +253,12 @@ export class Bookmarks extends SitePlugin {
             return;
         }
 
+        const url: URL = new URL(rawUrl);
+
         const newBm: Bookmark = {
             id: uuid(),
-            favicon: url + '/favicon.ico',
-            url,
+            favicon: url.protocol + '//' + url.hostname + '/favicon.ico',
+            url: url.href,
             text,
         };
 
