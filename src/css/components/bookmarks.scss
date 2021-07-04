@@ -1,3 +1,42 @@
+.bookmarksSettings {
+    &__settings {
+        margin-bottom: 2rem;
+    }
+
+    &__bookmarks {
+        ul {
+            &#listBookmarks {
+                margin-bottom: 1rem;
+            }
+
+            li {
+                display: grid;
+                grid-template-columns: 1fr 8fr 8fr 3fr;
+                grid-gap: 1rem;
+                align-items: center;
+
+                &:not(:last-of-type) {
+                    margin-bottom: 1rem;
+                }
+
+                img {
+                    width: 25px;
+                    height: 25px;
+                }
+
+                input[type='text'] {
+                    margin: 0;
+                    width: 100%;
+                }
+
+                .btn {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
+
 .wrapper__bookmarks {
     grid-area: bookmarks;
     margin-top: 3rem;

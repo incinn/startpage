@@ -1,6 +1,8 @@
 import { PluginStorage, SitePlugin } from '../site/plugin';
+import { v4 as uuid } from 'uuid';
 
 interface Bookmark {
+    id: string;
     favicon: string;
     url: string;
     text: string;
@@ -16,35 +18,46 @@ export class Bookmarks extends SitePlugin {
     public _refresh = false;
 
     private bookmarksContainerEl: HTMLElement;
+    private bookmarksSettingsContainerEl: HTMLElement;
     private settings: BookmarksSettings;
+
+    private newBookmarkUrlEl: HTMLInputElement;
+    private newBookmarkTextEl: HTMLInputElement;
+    private newBookmarkSubmitBtn: HTMLButtonElement;
 
     private initialBookmarks: Bookmark[] = [
         {
+            id: uuid(),
             favicon: 'https://barnz.dev/barnz.dev-favicon.png',
             url: 'https://barnz.dev',
             text: 'barnz.dev',
         },
         {
+            id: uuid(),
             favicon: 'https://news.ycombinator.com/favicon.ico',
             url: 'https://news.ycombinator.com',
             text: 'hacker news',
         },
         {
+            id: uuid(),
             favicon: 'https://www.youtube.com/favicon.ico',
             url: 'https://youtube.com',
             text: 'youtube',
         },
         {
+            id: uuid(),
             favicon: 'https://www.duckduckgo.com/favicon.ico',
             url: 'https://duckduckgo.com',
             text: 'duckduckgo',
         },
         {
+            id: uuid(),
             favicon: 'https://bbc.co.uk/favicon.ico',
             url: 'https://bbc.co.uk',
             text: 'bbc.co.uk',
         },
         {
+            id: uuid(),
             favicon: 'https://www.startpage.com/favicon.ico',
             url: 'https://startpage.com',
             text: 'startpage',
@@ -57,6 +70,20 @@ export class Bookmarks extends SitePlugin {
         this.bookmarksContainerEl = document.getElementById(
             'bookmarksContainer'
         ) as HTMLElement;
+
+        this.bookmarksSettingsContainerEl = document.getElementById(
+            'listBookmarks'
+        ) as HTMLElement;
+
+        this.newBookmarkUrlEl = document.getElementById(
+            'newBookmarkUrl'
+        ) as HTMLInputElement;
+        this.newBookmarkTextEl = document.getElementById(
+            'newBookmarkText'
+        ) as HTMLInputElement;
+        this.newBookmarkSubmitBtn = document.getElementById(
+            'newBookmarkSubmit'
+        ) as HTMLButtonElement;
 
         this.settings = this.getStorage()?.data.settings;
         if (!this.settings) {
@@ -71,9 +98,21 @@ export class Bookmarks extends SitePlugin {
 
     public init(): void {
         this.render();
+        this.renderSettings();
+
+        this.newBookmarkSubmitBtn.addEventListener('click', () => {
+            this.handeNewBookmarkButton();
+        });
     }
 
     private render(): void {
+        this.renderDisplay();
+        this.renderSettings();
+    }
+
+    private renderDisplay(): void {
+        this.bookmarksContainerEl.textContent = '';
+
         if (this.settings.show) {
             const bookmarks: Bookmark[] = this.getStorage()?.data.bookmarks;
 
@@ -83,6 +122,41 @@ export class Bookmarks extends SitePlugin {
                 );
             });
         }
+    }
+
+    private renderSettings(): void {
+        const bookmarks: Bookmark[] = this.getStorage()?.data.bookmarks;
+        this.bookmarksSettingsContainerEl.textContent = '';
+
+        bookmarks.forEach((bookmark) => {
+            this.bookmarksSettingsContainerEl.appendChild(
+                this.buildSettingsBookmarkElement(bookmark)
+            );
+        });
+    }
+
+    private buildSettingsBookmarkElement(b: Bookmark): HTMLElement {
+        const li = document.createElement('li');
+        const urlInput = document.createElement('input');
+        const textInput = document.createElement('input');
+        const removeBtn = document.createElement('button');
+        const img = new Image();
+
+        li.appendChild(img);
+        li.appendChild(urlInput);
+        li.appendChild(textInput);
+        li.appendChild(removeBtn);
+
+        urlInput.value = b.url;
+        urlInput.type = 'text';
+        textInput.value = b.text;
+        textInput.type = 'text';
+        removeBtn.textContent = 'Remove';
+        removeBtn.classList.add('btn', 'btn-light');
+
+        img.src = b.favicon;
+
+        return li;
     }
 
     private updateStorage(data: Bookmark[]): void {
@@ -144,5 +218,22 @@ export class Bookmarks extends SitePlugin {
                 reject();
             };
         });
+    }
+
+    private handeNewBookmarkButton(): void {
+        const url = this.newBookmarkUrlEl.value;
+        const text = this.newBookmarkTextEl.value;
+
+        if (url.length > 11 && text.length > 1) {
+            const newBm: Bookmark = {
+                id: uuid(),
+                favicon: url + '/favicon.ico',
+                url,
+                text,
+            };
+
+            this.updateStorage([...this.getStorage()?.data.bookmarks, newBm]);
+            this.render();
+        }
     }
 }

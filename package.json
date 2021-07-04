@@ -28,6 +28,7 @@
     "gulp-typescript": "^6.0.0-alpha.1",
     "reset-css": "^5.0.1",
     "ts-loader": "8.2.0",
+    "uuid": "^8.3.2",
     "webpack": "4.44.1",
     "webpack-stream": "^6.1.2"
   },

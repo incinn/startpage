@@ -1,0 +1,17 @@
+.settings__area
+    h2 Bookmarks
+    p Add remove and manage your bookmarks
+    .bookmarksSettings
+        .bookmarksSettings__settings
+            label(for="showBookmarks") Show Bookmarks 
+                input#showBookmarks(type="checkbox", name="showBookmarks")
+            label(for="showIcons") Show Favicons 
+                input#showIcons(type="checkbox", name="showIcons")
+        .bookmarksSettings__bookmarks
+            ul#listBookmarks
+            ul
+                li
+                    span
+                    input#newBookmarkUrl(type="text", name="newBookmarkUrl", placeholder="url")
+                    input#newBookmarkText(type="text", name="newBookmarkText", placeholder="text")
+                    button#newBookmarkSubmit.btn.btn-primary Add
