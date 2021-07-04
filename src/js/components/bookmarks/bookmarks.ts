@@ -101,7 +101,7 @@ export class Bookmarks extends SitePlugin {
         this.renderSettings();
 
         this.newBookmarkSubmitBtn.addEventListener('click', () => {
-            this.handeNewBookmarkButton();
+            this.handleNewBookmarkButton();
         });
     }
 
@@ -236,7 +236,7 @@ export class Bookmarks extends SitePlugin {
         this.render();
     }
 
-    private handeNewBookmarkButton(): void {
+    private handleNewBookmarkButton(): void {
         const url = this.newBookmarkUrlEl.value;
         const text = this.newBookmarkTextEl.value;
 
