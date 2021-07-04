@@ -40,27 +40,15 @@ export class Bookmarks extends SitePlugin {
         },
         {
             id: uuid(),
-            favicon: 'https://www.youtube.com/favicon.ico',
-            url: 'https://youtube.com',
-            text: 'youtube',
+            favicon: 'https://et.trackbase.net/favicon.ico',
+            url: 'https://et.trackbase.net/server/etc',
+            text: 'trackbase',
         },
         {
             id: uuid(),
-            favicon: 'https://www.duckduckgo.com/favicon.ico',
-            url: 'https://duckduckgo.com',
-            text: 'duckduckgo',
-        },
-        {
-            id: uuid(),
-            favicon: 'https://bbc.co.uk/favicon.ico',
-            url: 'https://bbc.co.uk',
-            text: 'bbc.co.uk',
-        },
-        {
-            id: uuid(),
-            favicon: 'https://www.startpage.com/favicon.ico',
-            url: 'https://startpage.com',
-            text: 'startpage',
+            favicon: 'https://stackoverflow.com/favicon.ico',
+            url: 'https://stackoverflow.com',
+            text: 'stackoverflow',
         },
     ];
 
