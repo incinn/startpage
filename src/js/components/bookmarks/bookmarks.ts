@@ -19,6 +19,8 @@ export class Bookmarks extends SitePlugin {
 
     private bookmarksContainerEl: HTMLElement;
     private bookmarksSettingsContainerEl: HTMLElement;
+
+    private bookmarks: Bookmark[];
     private settings: BookmarksSettings;
 
     private showBookmarksInput: HTMLInputElement;
@@ -90,7 +92,13 @@ export class Bookmarks extends SitePlugin {
                 showIcons: true,
             };
 
-            this.updateStorage(this.initialBookmarks);
+            this.updateStorage();
+        }
+
+        this.bookmarks = this.getStorage()?.data.bookmarks;
+        if (!this.bookmarks) {
+            this.bookmarks = this.initialBookmarks;
+            this.updateStorage();
         }
     }
 
@@ -123,9 +131,7 @@ export class Bookmarks extends SitePlugin {
         this.bookmarksContainerEl.textContent = '';
 
         if (this.settings.show) {
-            const bookmarks: Bookmark[] = this.getStorage()?.data.bookmarks;
-
-            bookmarks.forEach((bookmark) => {
+            this.bookmarks.forEach((bookmark) => {
                 this.bookmarksContainerEl.appendChild(
                     this.buildBookmark(bookmark)
                 );
@@ -134,10 +140,9 @@ export class Bookmarks extends SitePlugin {
     }
 
     private renderSettings(): void {
-        const bookmarks: Bookmark[] = this.getStorage()?.data.bookmarks;
         this.bookmarksSettingsContainerEl.textContent = '';
 
-        bookmarks.forEach((bookmark) => {
+        this.bookmarks.forEach((bookmark) => {
             this.bookmarksSettingsContainerEl.appendChild(
                 this.buildSettingsBookmarkElement(bookmark)
             );
@@ -173,11 +178,11 @@ export class Bookmarks extends SitePlugin {
         return li;
     }
 
-    private updateStorage(data: Bookmark[]): void {
+    private updateStorage(): void {
         this.setStorage({
             lastChange: 0,
             data: {
-                bookmarks: data,
+                bookmarks: this.bookmarks,
                 settings: this.settings,
             },
         });
@@ -236,23 +241,22 @@ export class Bookmarks extends SitePlugin {
 
     private handleShowBookmarksInputToggle(e: any): void {
         this.settings.show = e.target.checked;
-        // this.updateStorage();
+        this.updateStorage();
         this.renderDisplay();
     }
 
     private handleShowIconsInputInputToggle(e: any): void {
         this.settings.showIcons = e.target.checked;
+        this.updateStorage();
         this.renderDisplay();
     }
 
     private handleBookmarkRemoveButton(e: any): void {
-        const bookmarks = this.getStorage()?.data.bookmarks.filter(
-            (bookmark) => {
-                return bookmark.id !== e.srcElement.dataset.id;
-            }
-        );
+        this.bookmarks = this.bookmarks.filter((bookmark) => {
+            return bookmark.id !== e.srcElement.dataset.id;
+        });
 
-        this.updateStorage(bookmarks);
+        this.updateStorage();
         this.render();
     }
 
@@ -282,7 +286,9 @@ export class Bookmarks extends SitePlugin {
             text,
         };
 
-        this.updateStorage([...this.getStorage()?.data.bookmarks, newBm]);
+        this.bookmarks = [...this.bookmarks, newBm];
+
+        this.updateStorage();
         this.render();
 
         this.newBookmarkUrlEl.value = '';
