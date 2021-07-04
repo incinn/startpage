@@ -153,8 +153,13 @@ export class Bookmarks extends SitePlugin {
         textInput.type = 'text';
         removeBtn.textContent = 'Remove';
         removeBtn.classList.add('btn', 'btn-light');
+        removeBtn.dataset.id = b.id;
 
         img.src = b.favicon;
+
+        removeBtn.addEventListener('click', (e: any) => {
+            this.handleBookmarkRemoveButton(e);
+        });
 
         return li;
     }
@@ -220,6 +225,18 @@ export class Bookmarks extends SitePlugin {
         });
     }
 
+    private handleBookmarkRemoveButton(e: any): void {
+        const targetId = e.srcElement.dataset.id;
+
+        let bm: Bookmark[] = this.getStorage()?.data.bookmarks;
+        const newArray = bm.filter((bookmark) => {
+            return bookmark.id !== targetId;
+        });
+
+        this.updateStorage(newArray);
+        this.render();
+    }
+
     private handeNewBookmarkButton(): void {
         const url = this.newBookmarkUrlEl.value;
         const text = this.newBookmarkTextEl.value;
@@ -234,6 +251,9 @@ export class Bookmarks extends SitePlugin {
 
             this.updateStorage([...this.getStorage()?.data.bookmarks, newBm]);
             this.render();
+
+            this.newBookmarkUrlEl.value = '';
+            this.newBookmarkTextEl.value = '';
         }
     }
 }
