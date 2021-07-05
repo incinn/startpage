@@ -52,7 +52,7 @@ export class Bookmarks extends SitePlugin {
         {
             id: uuid(),
             favicon: 'https://stackoverflow.com/favicon.ico',
-            url: 'https://stackoverflow.com',
+            url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             text: 'stackoverflow',
         },
     ];

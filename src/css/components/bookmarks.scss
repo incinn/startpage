@@ -65,12 +65,12 @@
             a {
                 display: flex;
                 align-items: center;
-                background-color: var(--light-40);
+                background-color: var(--light-50);
                 border-radius: 4px;
                 text-decoration: none;
                 color: var(--dark);
                 transition: background-color var(--transition-medium);
-                padding: 0.5rem;
+                padding: 0.75rem;
 
                 @supports (backdrop-filter: blur()) {
                     backdrop-filter: blur(4px);
