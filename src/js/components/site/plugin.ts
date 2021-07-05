@@ -41,7 +41,7 @@ export class SitePlugin {
     }
 
     public setStorage(data: PluginStorage): void {
-        data.lastChange = new Date().getTime();
+        data.lastChange = new Date().valueOf();
         window.localStorage.setItem(this._name, JSON.stringify(data));
     }
 
