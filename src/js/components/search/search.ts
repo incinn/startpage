@@ -1,3 +1,4 @@
+import { isMobileMode } from '../../helpers/window';
 import { SitePlugin } from '../site/plugin';
 
 export enum SearchMode {
@@ -9,6 +10,8 @@ export class Search extends SitePlugin {
     public _name = 'Search';
     private searchInput: HTMLInputElement;
     private searchWrapper: HTMLElement;
+    private bookmarksWrapper: HTMLElement;
+    private weatherWrapper: HTMLElement;
     private searchBtn: HTMLButtonElement;
     private mode: SearchMode;
 
@@ -19,6 +22,8 @@ export class Search extends SitePlugin {
             'searchInput'
         ) as HTMLInputElement;
         this.searchWrapper = document.getElementById('searchWrapper');
+        this.bookmarksWrapper = document.getElementById('bookmarksWrapper');
+        this.weatherWrapper = document.getElementById('weatherDisplayWrapper');
         this.searchBtn = document.getElementById(
             'searchButton'
         ) as HTMLButtonElement;
@@ -48,8 +53,15 @@ export class Search extends SitePlugin {
     private toggleHelp(): void {
         if (this.searchInput.value[0] === '!') {
             this.searchWrapper.classList.add('showHelp');
+            this.bookmarksWrapper.classList.add('hidden');
+
+            if (isMobileMode()) {
+                this.weatherWrapper.classList.add('hidden');
+            }
         } else {
             this.searchWrapper.classList.remove('showHelp');
+            this.bookmarksWrapper.classList.remove('hidden');
+            this.weatherWrapper.classList.remove('hidden');
         }
     }
 

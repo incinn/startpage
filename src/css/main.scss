@@ -61,14 +61,14 @@ body {
     &__inner {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-areas: 'greeting time' 'date weather' 'search search';
+        grid-template-areas: 'greeting time' 'date weather' 'search search' 'bookmarks bookmarks';
         width: 80vw;
         max-width: 1000px;
 
         @include for-mobile {
             grid-template-columns: 1fr;
             grid-gap: 1rem;
-            grid-template-areas: 'time' 'date' 'search' 'weather';
+            grid-template-areas: 'time' 'date' 'search' 'weather' 'bookmarks';
         }
     }
 
@@ -138,3 +138,4 @@ body {
 @import 'components/themes';
 @import 'components/search';
 @import 'components/weather';
+@import 'components/bookmarks';

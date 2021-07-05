@@ -1,3 +1,4 @@
+import { Bookmarks } from '../bookmarks/bookmarks';
 import { Search } from '../search/search';
 import { DisplaySettings } from '../settings/settings';
 import { DisplayTheme } from '../theme/theme';
@@ -18,6 +19,7 @@ export class Site {
         new Weather(),
         new DisplaySettings(),
         new DisplayTheme(),
+        new Bookmarks(),
     ];
 
     constructor() {}

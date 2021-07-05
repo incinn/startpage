@@ -4,9 +4,15 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    transition: opacity var(--transition-long);
 
     @include for-mobile {
         justify-content: center;
+    }
+
+    &.hidden {
+        visibility: hidden;
+        opacity: 0;
     }
 
     span {
