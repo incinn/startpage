@@ -13,6 +13,11 @@ interface BookmarksSettings {
     showIcons: boolean;
 }
 
+interface BookmarkStorage {
+    settings: BookmarksSettings;
+    bookmarks: Bookmark[];
+}
+
 export class Bookmarks extends SitePlugin {
     public _name = 'Bookmarks';
     public _refresh = false;
@@ -85,7 +90,7 @@ export class Bookmarks extends SitePlugin {
             'newBookmarkSubmit'
         ) as HTMLButtonElement;
 
-        const storage: PluginStorage = this.getStorage();
+        const storage: PluginStorage<BookmarkStorage> = this.getStorage();
         this.settings = storage.data?.settings;
         this.bookmarks = storage.data?.bookmarks;
 

@@ -13,6 +13,11 @@ export interface WeatherSettings {
     units: WetherTempUnits;
 }
 
+export interface WeatherStorage {
+    settings: WeatherSettings;
+    weather: WeatherDisplayLite;
+}
+
 export enum WetherTempUnits {
     metric = 'metric',
     imperial = 'imperial',
@@ -64,7 +69,7 @@ export class Weather extends SitePlugin {
         ) as HTMLInputElement;
         this.weatherInfoEl = document.getElementById('weatherInfo');
 
-        const storage: PluginStorage = this.getStorage();
+        const storage: PluginStorage<WeatherStorage> = this.getStorage();
         this.settings = storage.data?.settings;
         this.lastSave = storage.lastChange;
         this.weather = storage.data?.weather;

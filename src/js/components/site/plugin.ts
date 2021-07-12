@@ -1,6 +1,6 @@
-export interface PluginStorage {
+export interface PluginStorage<T> {
     lastChange: number;
-    data: any;
+    data: T;
 }
 
 export class SitePlugin {
@@ -27,8 +27,8 @@ export class SitePlugin {
 
     public onRefresh(): void {}
 
-    public getStorage(): PluginStorage {
-        const emptyStorage: PluginStorage = {
+    public getStorage(): PluginStorage<any> {
+        const emptyStorage: PluginStorage<null> = {
             lastChange: 0,
             data: null,
         };
@@ -49,7 +49,7 @@ export class SitePlugin {
         return JSON.parse(window.localStorage.getItem('settings'));
     }
 
-    public setStorage(data: PluginStorage): void {
+    public setStorage(data: PluginStorage<any>): void {
         data.lastChange = new Date().valueOf();
         window.localStorage.setItem(this._name, JSON.stringify(data));
     }

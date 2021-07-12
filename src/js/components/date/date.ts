@@ -1,4 +1,4 @@
-import { SitePlugin } from '../site/plugin';
+import { PluginStorage, SitePlugin } from '../site/plugin';
 
 interface DateSettings {
     showWeekNumber: boolean;
@@ -47,7 +47,9 @@ export class DisplayDate extends SitePlugin {
             'showWeekNumber'
         ) as HTMLInputElement;
 
-        this.settings = this.getStorage()?.data;
+        const storage: PluginStorage<DateSettings> = this.getStorage();
+        this.settings = storage.data;
+
         if (!this.settings) {
             this.settings = {
                 showWeekNumber: true,

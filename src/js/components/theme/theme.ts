@@ -37,7 +37,7 @@ export class DisplayTheme extends SitePlugin {
 
         this.randomBtn.addEventListener('click', () => this.randomTheme());
 
-        const storage: PluginStorage = this.getStorage();
+        const storage: PluginStorage<ThemeSettings> = this.getStorage();
         if (storage.data) {
             this.settings = storage.data;
         } else {
