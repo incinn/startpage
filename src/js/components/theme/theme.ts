@@ -66,6 +66,9 @@ export class DisplayTheme extends SitePlugin {
             ? this.themes[Math.floor(Math.random() * this.themes.length)]
             : this.settings.name;
 
+        document.body.classList.remove('loading');
+        document.body.classList.add('loaded');
+
         this.themes.forEach((t) => {
             t === theme
                 ? this.container.classList.add(t)
