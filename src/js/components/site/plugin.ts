@@ -4,7 +4,7 @@ export interface PluginStorage {
 }
 
 export class SitePlugin {
-    public _name = 'Blank Plugin';
+    public _name = 'Plugin';
     public _refresh = false;
 
     constructor() {}
@@ -28,11 +28,20 @@ export class SitePlugin {
     public onRefresh(): void {}
 
     public getStorage(): PluginStorage {
+        const emptyStorage: PluginStorage = {
+            lastChange: 0,
+            data: null,
+        };
+
         try {
-            return JSON.parse(window.localStorage.getItem(this._name));
+            if (window.localStorage.getItem(this._name) === null) {
+                return emptyStorage;
+            } else {
+                return JSON.parse(window.localStorage.getItem(this._name));
+            }
         } catch (error) {
             console.error(error);
-            return null;
+            return emptyStorage;
         }
     }
 
