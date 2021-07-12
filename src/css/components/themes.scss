@@ -89,6 +89,7 @@ body {
 
             &.selected {
                 transform: scale(1.035);
+                border-color: var(--success);
                 box-shadow: 0px 0px 10px 1px rgba(black, 0.5);
 
                 &:after {
@@ -99,10 +100,6 @@ body {
                     bottom: 0.5rem;
                     right: 0.5rem;
                 }
-            }
-
-            &.active {
-                border-color: var(--success);
             }
 
             &[data-id='moon'] {
