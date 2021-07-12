@@ -85,19 +85,22 @@ export class Bookmarks extends SitePlugin {
             'newBookmarkSubmit'
         ) as HTMLButtonElement;
 
-        this.settings = this.getStorage()?.data.settings;
+        const storage: PluginStorage = this.getStorage();
+        this.settings = storage.data?.settings;
+        this.bookmarks = storage.data?.bookmarks;
+
         if (!this.settings) {
             this.settings = {
                 show: true,
                 showIcons: true,
             };
-
-            this.updateStorage();
         }
 
-        this.bookmarks = this.getStorage()?.data.bookmarks;
         if (!this.bookmarks) {
             this.bookmarks = this.initialBookmarks;
+        }
+
+        if (!this.settings || !this.bookmarks) {
             this.updateStorage();
         }
     }
