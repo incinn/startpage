@@ -1,10 +1,10 @@
-export interface PluginStorage {
+export interface PluginStorage<T> {
     lastChange: number;
-    data: any;
+    data: T;
 }
 
 export class SitePlugin {
-    public _name = 'Blank Plugin';
+    public _name = 'Plugin';
     public _refresh = false;
 
     constructor() {}
@@ -27,12 +27,21 @@ export class SitePlugin {
 
     public onRefresh(): void {}
 
-    public getStorage(): PluginStorage {
+    public getStorage(): PluginStorage<any> {
+        const emptyStorage: PluginStorage<null> = {
+            lastChange: 0,
+            data: null,
+        };
+
         try {
-            return JSON.parse(window.localStorage.getItem(this._name));
+            if (window.localStorage.getItem(this._name) === null) {
+                return emptyStorage;
+            } else {
+                return JSON.parse(window.localStorage.getItem(this._name));
+            }
         } catch (error) {
             console.error(error);
-            return null;
+            return emptyStorage;
         }
     }
 
@@ -40,8 +49,8 @@ export class SitePlugin {
         return JSON.parse(window.localStorage.getItem('settings'));
     }
 
-    public setStorage(data: PluginStorage): void {
-        data.lastChange = new Date().getTime();
+    public setStorage(data: PluginStorage<any>): void {
+        data.lastChange = new Date().valueOf();
         window.localStorage.setItem(this._name, JSON.stringify(data));
     }
 

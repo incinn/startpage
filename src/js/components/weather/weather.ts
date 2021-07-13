@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter } from '../../helpers/text';
+import { azStringClean, capitalizeFirstLetter } from '../../helpers/text';
 import { PluginStorage, SitePlugin } from '../site/plugin';
 
 export interface WeatherDisplayLite {
@@ -13,32 +13,48 @@ export interface WeatherSettings {
     units: WetherTempUnits;
 }
 
+export interface WeatherStorage {
+    settings: WeatherSettings;
+    weather: WeatherDisplayLite;
+}
+
 export enum WetherTempUnits {
     metric = 'metric',
     imperial = 'imperial',
 }
 
 export class Weather extends SitePlugin {
-    public _name = 'Display weather';
+    public _name = 'Weather';
     public _refresh = true;
+
+    private weather: WeatherDisplayLite;
+    private settings: WeatherSettings;
+    private lastChange: number;
+    private lastSave: number;
+
     private container: HTMLElement;
+    private icon: HTMLImageElement;
+    private weatherDisplayLocation: HTMLElement;
+
     private saveButton: HTMLButtonElement;
     private resetButton: HTMLButtonElement;
     private countryEl: HTMLSelectElement;
     private cityEl: HTMLInputElement;
     private weatherInfoEl: HTMLElement;
-    private weatherDisplayLocation: HTMLElement;
-    private settings: WeatherSettings;
-    private icon: any;
-    private lastSave: number;
+
     private weatherApi = 'https://api.openweathermap.org/data/2.5/weather';
     private iconUrl = 'https://openweathermap.org/img/wn/';
     private apiKey = process.env.OPENWEATHERMAP_API_KEY;
 
     constructor() {
         super();
+
         this.container = document.getElementById('weatherDisplay');
-        this.icon = document.getElementById('weatherIcon');
+        this.icon = document.getElementById('weatherIcon') as HTMLImageElement;
+        this.weatherDisplayLocation = document.getElementById(
+            'weatherDisplayLocation'
+        );
+
         this.saveButton = document.getElementById(
             'weatherSave'
         ) as HTMLButtonElement;
@@ -52,11 +68,12 @@ export class Weather extends SitePlugin {
             'weatherCity'
         ) as HTMLInputElement;
         this.weatherInfoEl = document.getElementById('weatherInfo');
-        this.weatherDisplayLocation = document.getElementById(
-            'weatherDisplayLocation'
-        );
 
-        this.settings = this.getStorage()?.data.settings;
+        const storage: PluginStorage<WeatherStorage> = this.getStorage();
+        this.settings = storage.data?.settings;
+        this.lastSave = storage.lastChange;
+        this.weather = storage.data?.weather;
+
         if (!this.settings) {
             this.settings = {
                 country: 'GB',
@@ -69,15 +86,13 @@ export class Weather extends SitePlugin {
     }
 
     public init(): void {
-        const data: PluginStorage = this.getStorage();
-        if (data) {
-            const timeSinceSave =
-                new Date().valueOf() - new Date(data.lastChange).valueOf();
+        if (this.weather) {
+            const timeSinceSave = new Date().valueOf() - this.lastChange;
 
             // 15min check
             timeSinceSave >= 900000
                 ? this.setWeather()
-                : this.render(data.data.weather);
+                : this.render(this.weather);
         } else {
             this.setWeather();
         }
@@ -140,11 +155,9 @@ export class Weather extends SitePlugin {
             const request = new XMLHttpRequest();
             let query: string;
 
-            if (settings) {
-                query = `${this.weatherApi}?q=${settings.city},${settings.country}&units=${settings.units}&appid=${this.apiKey}`;
-            } else {
-                query = `${this.weatherApi}?q=${this.settings.city},${this.settings.country}&units=${this.settings.units}&appid=${this.apiKey}`;
-            }
+            query = settings
+                ? `${this.weatherApi}?q=${settings.city},${settings.country}&units=${settings.units}&appid=${this.apiKey}`
+                : `${this.weatherApi}?q=${this.settings.city},${this.settings.country}&units=${this.settings.units}&appid=${this.apiKey}`;
 
             request.open('GET', query);
             request.send();
@@ -161,12 +174,16 @@ export class Weather extends SitePlugin {
 
                         resolve(weather);
                     } else {
+                        console.error(
+                            `Returned code ${request.status}, assuming invalid location`
+                        );
                         reject('Invalid location');
                     }
                 }
             };
 
             request.onerror = () => {
+                console.error('Request error', request.responseText);
                 reject('Error fetching weather');
             };
         });
@@ -185,8 +202,8 @@ export class Weather extends SitePlugin {
     private handleSaveButton(): void {
         this.cityEl.classList.remove('error');
 
-        const country = this.cleanString(this.countryEl.value);
-        const city = capitalizeFirstLetter(this.cleanString(this.cityEl.value));
+        const country = azStringClean(this.countryEl.value);
+        const city = capitalizeFirstLetter(azStringClean(this.cityEl.value));
 
         if (country === this.settings.country && city === this.settings.city) {
             return;
@@ -236,9 +253,5 @@ export class Weather extends SitePlugin {
         this.weatherInfoEl.classList.remove('success');
         this.weatherInfoEl.classList.add(success ? 'success' : 'error');
         this.weatherInfoEl.innerHTML = text;
-    }
-
-    private cleanString(a: string): string {
-        return a.replace(/[^a-zA-Z ]/gi, '');
     }
 }

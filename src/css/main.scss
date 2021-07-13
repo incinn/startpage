@@ -47,6 +47,24 @@ body {
     * {
         box-sizing: border-box;
     }
+
+    &.loading {
+        opacity: 0;
+
+        .wrapper__inner {
+            transform: scale(0.5);
+        }
+    }
+
+    &.loaded {
+        opacity: 1;
+        transition: opacity var(--transition-medium);
+
+        .wrapper__inner {
+            transform: scale(1);
+            transition: transform var(--transition-short);
+        }
+    }
 }
 
 .wrapper {

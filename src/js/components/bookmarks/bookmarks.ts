@@ -13,6 +13,11 @@ interface BookmarksSettings {
     showIcons: boolean;
 }
 
+interface BookmarkStorage {
+    settings: BookmarksSettings;
+    bookmarks: Bookmark[];
+}
+
 export class Bookmarks extends SitePlugin {
     public _name = 'Bookmarks';
     public _refresh = false;
@@ -85,19 +90,22 @@ export class Bookmarks extends SitePlugin {
             'newBookmarkSubmit'
         ) as HTMLButtonElement;
 
-        this.settings = this.getStorage()?.data.settings;
+        const storage: PluginStorage<BookmarkStorage> = this.getStorage();
+        this.settings = storage.data?.settings;
+        this.bookmarks = storage.data?.bookmarks;
+
         if (!this.settings) {
             this.settings = {
                 show: true,
                 showIcons: true,
             };
-
-            this.updateStorage();
         }
 
-        this.bookmarks = this.getStorage()?.data.bookmarks;
         if (!this.bookmarks) {
             this.bookmarks = this.initialBookmarks;
+        }
+
+        if (!this.settings || !this.bookmarks) {
             this.updateStorage();
         }
     }
