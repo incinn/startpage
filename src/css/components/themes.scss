@@ -1,5 +1,4 @@
 body {
-    background-color: black;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -7,7 +6,7 @@ body {
     &.moon {
         background-image: url('img/background-moon.jpg');
 
-        .wrapper {
+        &.loaded .wrapper {
             background-color: rgba(#130f0c, 0.95);
         }
     }
@@ -15,7 +14,7 @@ body {
     &.mountain {
         background-image: url('img/background-mountain.jpg');
 
-        .wrapper {
+        &.loaded .wrapper {
             background-color: rgba(#353945, 0.85);
         }
     }
@@ -23,7 +22,7 @@ body {
     &.cat {
         background-image: url('img/background-cat.jpg');
 
-        .wrapper {
+        &.loaded .wrapper {
             background-color: rgba(#644b44, 0.75);
         }
     }
@@ -31,7 +30,7 @@ body {
     &.nlights {
         background-image: url('img/background-nlights.jpg');
 
-        .wrapper {
+        &.loaded .wrapper {
             background-color: rgba(#001b2c, 0.78);
         }
     }

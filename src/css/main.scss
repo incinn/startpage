@@ -49,20 +49,22 @@ body {
     }
 
     &.loading {
-        opacity: 0;
-
         .wrapper__inner {
-            transform: scale(0.5);
+            opacity: 0;
+            transform: scale(0.92);
         }
     }
 
     &.loaded {
-        opacity: 1;
-        transition: opacity var(--transition-medium);
+        .wrapper {
+            transition: background-color var(--transition-long);
+        }
 
         .wrapper__inner {
             transform: scale(1);
-            transition: transform var(--transition-short);
+            opacity: 1;
+            transition: transform var(--transition-long),
+                opacity var(--transition-long);
         }
     }
 }
@@ -75,6 +77,7 @@ body {
     width: 100vw;
     height: 100vh;
     padding: 1rem;
+    background-color: rgb(25, 26, 29);
 
     &__inner {
         display: grid;
