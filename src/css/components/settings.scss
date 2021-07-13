@@ -1,3 +1,12 @@
+.loading #settingsToggle {
+    transform: translateY(-100px);
+}
+
+.loaded #settingsToggle {
+    transition: transform var(--transition-long) 150ms,
+        opacity var(--transition-short);
+}
+
 #settingsToggle {
     position: absolute;
     top: 0;
@@ -8,7 +17,7 @@
     color: white;
     border: none;
     cursor: pointer;
-    opacity: 0.5;
+    opacity: 0.1;
 
     &:hover {
         opacity: 1;
