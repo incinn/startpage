@@ -119,7 +119,7 @@ export class DisplaySettings extends SitePlugin {
     private handleScroll(): void {
         const wrapper = document.querySelector('.settings__content__inner');
 
-        let tabContentTitle: NodeListOf<HTMLElement> =
+        const tabContentTitle: NodeListOf<HTMLElement> =
             document.querySelectorAll(
                 '#settingsContainer .settings__content .settings__area h2'
             );
@@ -135,29 +135,12 @@ export class DisplaySettings extends SitePlugin {
 
         for (let i = 0; i < tabContentTitle.length; i++) {
             if (isVisible(tabContentTitle[i], wrapper)) {
-                console.log(new Date().getTime());
-                console.log(tabContentTitle[i].innerText + ' is visible');
-                this.activeTab = tabContentTitle[i].innerText.toLowerCase(); // wip
+                this.activeTab = tabContentTitle[i].innerText.toLowerCase();
                 this.displayActiveTab();
                 this.makeActiveTabVisible();
                 break;
             }
         }
-
-        // tabContentTitle.forEach((tab) => {
-        // if (isVisible(tab, wrapper)) {
-        //     console.log(new Date().getTime());
-        //     console.log(tab.dataset.tab + ' is visible');
-        //     return false;
-        // }
-        // let position = tab.getBoundingClientRect();
-        // if (position.top < wrapper.clientHeight && position.bottom >= 0) {
-        //     console.log(
-        //         tab.dataset.tab + ' is partially visible in screen'
-        //     );
-        //     // this.displayActiveTab(tab.dataset.tab);
-        // }
-        // });
     }
 
     public destroy(): void {}
