@@ -79,7 +79,7 @@
         z-index: 12;
         width: 70vw;
         max-width: 800px;
-        height: 40vh;
+        height: 50vh;
 
         @supports (backdrop-filter: blur()) {
             background-color: var(--dark-70);
@@ -126,10 +126,6 @@
                 width: 0;
                 background: transparent;
             }
-
-            // &::-webkit-scrollbar-thumb {
-            //     background: #ff0000;
-            // }
         }
     }
 
