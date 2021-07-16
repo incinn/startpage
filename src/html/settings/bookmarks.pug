@@ -3,10 +3,16 @@
     p Add, remove and modify your bookmarks.
     .bookmarksSettings
         .bookmarksSettings__settings
-            label(for="showBookmarks") Show Bookmarks 
+            .checkbox
                 input#showBookmarks(type="checkbox", name="showBookmarks")
-            label(for="showIcons") Show Website Icons 
+                label(for="showBookmarks")
+                    span Show Bookmarks
+                    span Toggles the rendering of bookmarks under search.
+            .checkbox
                 input#showIcons(type="checkbox", name="showIcons")
+                label(for="showIcons")
+                    span Show Website Icons
+                    span Toggles the rendering of website favicons next to bookmark. 
         .bookmarksSettings__bookmarks
             ul#listBookmarks
             ul

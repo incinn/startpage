@@ -182,5 +182,39 @@
                 background-color: var(--danger);
             }
         }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            &:not(:last-of-type) {
+                margin-bottom: 1rem;
+            }
+
+            input[type='checkbox'] {
+                width: 35px;
+                height: 35px;
+            }
+
+            label {
+                display: flex;
+                flex-direction: column;
+                cursor: pointer;
+                margin: 0 0 0 0.5rem;
+
+                span {
+                    text-transform: none;
+
+                    &:first-of-type {
+                        font-weight: bold;
+                        text-transform: uppercase;
+
+                        font-size: 0.75rem;
+                        margin: 0 0 0.5rem 0;
+                    }
+                }
+            }
+        }
     }
 }

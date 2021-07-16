@@ -57,10 +57,6 @@ export class DisplaySettings extends SitePlugin {
                 'scroll',
                 _.throttle(this.handleScroll.bind(this), 200)
             );
-
-        // document
-        //     .querySelector('.settings__content__inner')
-        //     .addEventListener('scroll', this.handleScroll.bind(this));
     }
 
     private handleToggle(): void {
