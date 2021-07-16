@@ -9,11 +9,11 @@
 
 #settingsToggle {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 0.5rem;
+    right: 0.5rem;
     z-index: 20;
     background: none;
-    padding: 1rem;
+    padding: 0.5rem;
     color: white;
     border: none;
     cursor: pointer;
@@ -21,13 +21,13 @@
 
     &:hover {
         opacity: 1;
+        transform: rotate(30deg);
     }
 }
 
 .settings {
     display: none;
     visibility: visible;
-    opacity: 0;
     align-items: center;
     justify-content: center;
     position: absolute;
@@ -38,10 +38,26 @@
     z-index: 10;
     transition: opacity var(--transition-medium);
 
-    &.show {
+    &.loading {
+        opacity: 0;
         display: flex;
         visibility: visible;
+        transition: opacity var(--transition-medium);
+
+        .settings__content {
+            transform: translateY(-100px);
+            transition: transform var(--transition-medium);
+        }
+    }
+
+    &.show {
         opacity: 1;
+        transition: opacity var(--transition-medium);
+
+        .settings__content {
+            transform: translateY(0);
+            transition: transform var(--transition-medium);
+        }
     }
 
     &__underlay {
@@ -54,16 +70,16 @@
         z-index: 11;
     }
 
-    &__inner {
+    &__content {
+        position: relative;
         padding: 2rem;
-        border-radius: 15px;
+        border-radius: 3px;
         background-color: var(--dark-90);
         color: var(--light);
         z-index: 12;
         width: 70vw;
         max-width: 800px;
-        max-height: 70vh;
-        overflow-y: auto;
+        height: 40vh;
 
         @supports (backdrop-filter: blur()) {
             background-color: var(--dark-70);
@@ -74,11 +90,61 @@
             width: 95vw;
             padding: 1.5rem;
         }
+
+        &__tabs {
+            display: flex;
+            position: absolute;
+            top: -40px;
+
+            li {
+                padding: 0.75rem 1rem;
+                background-color: var(--light-50);
+                color: var(--dark);
+                margin-right: 1rem;
+                border-top-left-radius: 3px;
+                border-top-right-radius: 3px;
+                cursor: pointer;
+
+                &.active {
+                    background-color: var(--dark-90);
+                    color: var(--light);
+
+                    @supports (backdrop-filter: blur()) {
+                        background-color: var(--dark-70);
+                        backdrop-filter: blur(4px);
+                    }
+                }
+            }
+        }
+
+        &__inner {
+            overflow-x: hidden;
+            overflow-y: scroll;
+            max-height: 100%;
+
+            &::-webkit-scrollbar {
+                width: 0;
+                background: transparent;
+            }
+
+            // &::-webkit-scrollbar-thumb {
+            //     background: #ff0000;
+            // }
+        }
     }
 
     &__area {
+        opacity: 0.2;
+        transition: opacity var(--transition-short);
+
         &:not(:last-of-type) {
-            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--light-20);
+            padding-bottom: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        &.active {
+            opacity: 1;
         }
 
         h2 {

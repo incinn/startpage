@@ -1,7 +1,13 @@
 .settings#settingsContainer
   .settings__underlay#settingsUnderlay
-  .settings__inner
-    include settings/date.pug
-    include settings/weather.pug
-    include settings/theme.pug
-    include settings/bookmarks.pug
+  .settings__content
+    ul.settings__content__tabs
+      li(data-tab="date") Date 
+      li(data-tab="weather") Weather 
+      li(data-tab="theme") Theme
+      li(data-tab="bookmarks") Bookmarks
+    .settings__content__inner
+      include settings/date.pug
+      include settings/weather.pug
+      include settings/theme.pug
+      include settings/bookmarks.pug
