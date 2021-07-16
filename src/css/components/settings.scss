@@ -80,6 +80,7 @@
         width: 70vw;
         max-width: 800px;
         height: 50vh;
+        max-height: 650px;
 
         @supports (backdrop-filter: blur()) {
             background-color: var(--dark-70);
