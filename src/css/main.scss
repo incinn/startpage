@@ -11,6 +11,7 @@
     --dark: #2d2d34;
     --dark-70: #{rgba(#2d2d34, 0.7)};
     --dark-90: #{rgba(#2d2d34, 0.9)};
+    --dark-darker: #{darken(#2d2d34, 3%)};
     --light: #f1e4e8;
     --light-10: #{rgba(#f1e4e8, 0.1)};
     --light-20: #{rgba(#f1e4e8, 0.2)};

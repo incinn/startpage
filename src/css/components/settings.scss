@@ -97,15 +97,17 @@
                 background-color: var(--light);
                 color: var(--dark);
                 margin-right: 1rem;
-                border-top-left-radius: 3px;
-                border-top-right-radius: 3px;
+                border-top-left-radius: 6px;
+                border-top-right-radius: 6px;
+                border-bottom: 1px solid transparent;
                 cursor: pointer;
                 transition: background-color var(--transition-short),
                     color var(--transition-short);
 
                 &.active {
-                    background-color: var(--dark);
+                    background-color: var(--dark-darker);
                     color: var(--light);
+                    border-color: var(--light-20);
                 }
 
                 &:not(.active):hover {
