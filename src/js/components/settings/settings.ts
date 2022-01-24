@@ -49,7 +49,6 @@ export class DisplaySettings extends SitePlugin {
 
         this.displayActiveTab();
         this.scrollTabIntoView();
-        this.makeActiveTabVisible();
 
         document
             .querySelector('.settings__content__inner')
@@ -106,16 +105,6 @@ export class DisplaySettings extends SitePlugin {
         });
     }
 
-    private makeActiveTabVisible(): void {
-        this.tabContent.forEach((tabEl) => {
-            if (tabEl.dataset.tab === this.activeTab) {
-                tabEl.classList.add('active');
-            } else {
-                tabEl.classList.remove('active');
-            }
-        });
-    }
-
     private handleScroll(): void {
         const wrapper = document.querySelector('.settings__content__inner');
 
@@ -137,7 +126,6 @@ export class DisplaySettings extends SitePlugin {
             if (isVisible(tabContentTitle[i], wrapper)) {
                 this.activeTab = tabContentTitle[i].innerText.toLowerCase();
                 this.displayActiveTab();
-                this.makeActiveTabVisible();
                 break;
             }
         }

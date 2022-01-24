@@ -66,26 +66,22 @@
         right: 0;
         bottom: 0;
         left: 0;
-        background: rgba(black, 0.5);
+        background: rgba(black, 0.75);
         z-index: 11;
     }
 
     &__content {
         position: relative;
         padding: 2rem;
-        border-radius: 3px;
-        background-color: var(--dark-90);
+        border-radius: 6px;
+        background-color: var(--dark);
+        box-shadow: 0px 0px 100px 1px rgba(225, 225, 225, 0.1);
         color: var(--light);
         z-index: 12;
         width: 70vw;
         max-width: 800px;
         height: 50vh;
         max-height: 650px;
-
-        @supports (backdrop-filter: blur()) {
-            background-color: var(--dark-70);
-            backdrop-filter: blur(4px);
-        }
 
         @include for-mobile {
             width: 95vw;
@@ -95,27 +91,28 @@
         &__tabs {
             display: flex;
             position: absolute;
-            top: -40px;
+            top: -41px;
 
             li {
                 padding: 0.75rem 1rem;
-                background-color: var(--light-50);
+                background-color: var(--light);
                 color: var(--dark);
                 margin-right: 1rem;
-                border-top-left-radius: 3px;
-                border-top-right-radius: 3px;
+                border-top-left-radius: 6px;
+                border-top-right-radius: 6px;
+                border-bottom: 1px solid transparent;
                 cursor: pointer;
-                transition: background-color var(--transition-short),
-                    color var(--transition-short);
+                transition: background-color var(--transition-shortest),
+                    color var(--transition-shortest);
 
                 &.active {
-                    background-color: var(--dark-90);
+                    background-color: var(--dark-darker);
                     color: var(--light);
+                    border-color: var(--light-20);
+                }
 
-                    @supports (backdrop-filter: blur()) {
-                        background-color: var(--dark-70);
-                        backdrop-filter: blur(4px);
-                    }
+                &:not(.active):hover {
+                    background-color: var(--gray-dark);
                 }
             }
         }
@@ -133,17 +130,10 @@
     }
 
     &__area {
-        opacity: 0.2;
-        transition: opacity var(--transition-short);
-
         &:not(:last-of-type) {
-            border-bottom: 1px solid var(--light-20);
+            border-bottom: 2px solid var(--dark-darker);
             padding-bottom: 2rem;
             margin-bottom: 2rem;
-        }
-
-        &.active {
-            opacity: 1;
         }
 
         h2 {
@@ -171,7 +161,7 @@
             padding: 0.5rem;
             background-color: #fff;
             border: 2px solid var(--gray);
-            border-radius: 4px;
+            border-radius: 6px;
 
             &:focus-visible,
             &:focus {

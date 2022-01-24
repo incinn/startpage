@@ -6,10 +6,16 @@ html(lang="en")
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel='icon', href='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛰️</text></svg>')
     link(rel='stylesheet' href='main.css')
     title Start
   body.loading
     .wrapper#main
+      noscript
+        .noJs 
+          | JavaScript required for this application.
+          br
+          | (js-free version coming soon)
       button#settingsToggle
         img(src='img/icon/settings.svg')
       main.wrapper__inner
@@ -22,7 +28,7 @@ html(lang="en")
       footer
         span#versionInfo v1.0.1
         span 
-          a(href="https://github.com/incinn/startpage#assets", target="_blank") acknowledgements
+          a(href="https://github.com/incinn/startpage", target="_blank") view source
         span built by 
           a(href="https://barnz.dev") barnz.dev
     include html/settings.pug
