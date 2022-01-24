@@ -74,18 +74,13 @@
         position: relative;
         padding: 2rem;
         border-radius: 3px;
-        background-color: var(--dark-90);
+        background-color: var(--dark);
         color: var(--light);
         z-index: 12;
         width: 70vw;
         max-width: 800px;
         height: 50vh;
         max-height: 650px;
-
-        @supports (backdrop-filter: blur()) {
-            background-color: var(--dark-70);
-            backdrop-filter: blur(4px);
-        }
 
         @include for-mobile {
             width: 95vw;
@@ -99,7 +94,7 @@
 
             li {
                 padding: 0.75rem 1rem;
-                background-color: var(--light-50);
+                background-color: var(--light);
                 color: var(--dark);
                 margin-right: 1rem;
                 border-top-left-radius: 3px;
@@ -109,13 +104,9 @@
                     color var(--transition-short);
 
                 &.active {
-                    background-color: var(--dark-90);
+                    background-color: var(--dark);
                     color: var(--light);
-
-                    @supports (backdrop-filter: blur()) {
-                        background-color: var(--dark-70);
-                        backdrop-filter: blur(4px);
-                    }
+                }
                 }
             }
         }
