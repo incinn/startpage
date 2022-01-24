@@ -107,6 +107,9 @@
                     background-color: var(--dark);
                     color: var(--light);
                 }
+
+                &:not(.active):hover {
+                    background-color: var(--gray-dark);
                 }
             }
         }
