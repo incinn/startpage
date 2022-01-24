@@ -101,8 +101,8 @@
                 border-top-right-radius: 6px;
                 border-bottom: 1px solid transparent;
                 cursor: pointer;
-                transition: background-color var(--transition-short),
-                    color var(--transition-short);
+                transition: background-color var(--transition-shortest),
+                    color var(--transition-shortest);
 
                 &.active {
                     background-color: var(--dark-darker);
