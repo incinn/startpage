@@ -73,7 +73,7 @@
     &__content {
         position: relative;
         padding: 2rem;
-        border-radius: 3px;
+        border-radius: 6px;
         background-color: var(--dark);
         box-shadow: 0px 0px 100px 1px rgba(225, 225, 225, 0.1);
         color: var(--light);
@@ -161,7 +161,7 @@
             padding: 0.5rem;
             background-color: #fff;
             border: 2px solid var(--gray);
-            border-radius: 4px;
+            border-radius: 6px;
 
             &:focus-visible,
             &:focus {
