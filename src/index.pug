@@ -10,6 +10,11 @@ html(lang="en")
     title Start
   body.loading
     .wrapper#main
+      noscript
+        .noJs 
+          | JavaScript required for this application.
+          br
+          | (js-free version in development)
       button#settingsToggle
         img(src='img/icon/settings.svg')
       main.wrapper__inner

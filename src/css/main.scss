@@ -50,6 +50,10 @@ body {
         box-sizing: border-box;
     }
 
+    .noJs {
+        line-height: 1.5;
+    }
+
     &.loading {
         .wrapper__inner {
             opacity: 0;
