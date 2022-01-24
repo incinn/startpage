@@ -129,17 +129,10 @@
     }
 
     &__area {
-        opacity: 0.2;
-        transition: opacity var(--transition-short);
-
         &:not(:last-of-type) {
             border-bottom: 2px solid var(--dark-darker);
             padding-bottom: 2rem;
             margin-bottom: 2rem;
-        }
-
-        &.active {
-            opacity: 1;
         }
 
         h2 {
