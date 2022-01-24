@@ -133,7 +133,7 @@
         transition: opacity var(--transition-short);
 
         &:not(:last-of-type) {
-            border-bottom: 1px solid var(--light-20);
+            border-bottom: 2px solid var(--dark-darker);
             padding-bottom: 2rem;
             margin-bottom: 2rem;
         }
