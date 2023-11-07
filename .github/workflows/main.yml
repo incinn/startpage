@@ -11,10 +11,10 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v2
 
-      - name: Setup Node@8
+      - name: Setup Node@10.24.1
         uses: actions/setup-node@v1
         with:
-          node-version: 8.11.1
+          node-version: 10.24.1
 
       - name: NPM Install
         run: npm install
