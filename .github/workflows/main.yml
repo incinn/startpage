@@ -1,23 +1,38 @@
 name: Build & Deploy
 
 on:
-    push:
-        branches: [main]
+  push:
+    branches: [main]
 
 jobs:
-    build:
-        name: Deploy
-        runs-on: ubuntu-latest
-        steps:
-            - name: deploying to start.barnz.dev
-              uses: appleboy/ssh-action@master
-              with:
-                  host: barnz.dev
-                  username: ${{ secrets.SSH_USER }}
-                  key: ${{ secrets.SSH_KEY }}
-                  port: ${{ secrets.SSH_PORT }}
-                  script: |
-                      cd /var/www/start.barnz.dev/startpage
-                      git pull origin main
-                      npm ci
-                      npx gulp build
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+
+      - name: Setup Node@8
+        uses: actions/setup-node@v1
+        with:
+          node-version: 8.11.1
+
+      - name: NPM Install
+        run: npm ci
+
+      - name: Install Gulp Globally
+        run: npm i --global gulp-cli
+
+      - name: Build
+        run: npx gulp build
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: 'placeholder'
+
+      - name: Add Known Hosts
+        run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy Website
+        run: rsync -avz -O --delete -e 'ssh -p ${{ secrets.SSH_PORT }}' dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOYMENT_DIR }}
